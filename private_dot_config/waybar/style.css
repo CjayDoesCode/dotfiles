@@ -1,0 +1,97 @@
+* {
+  all: unset;
+  color: rgb(243, 242, 204);
+  font-family: "Inter", "Symbols Nerd Font Mono", sans-serif;
+  font-size: 14;
+}
+
+#waybar {
+  background-color: rgba(35, 35, 35, 0.5);
+}
+
+.modules-left, .modules-center, .modules-right {
+  margin: 4px 8px 4px 8px;
+}
+
+#workspaces {
+  padding: 0px 8px 0px 8px;
+  border-radius: 8px;
+  background-color: rgba(35, 35, 35, 0.25);
+  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+}
+
+#workspaces button {
+  min-width: 32px;
+}
+
+#workspaces button label {
+  color: rgba(35, 35, 35, 0.25);
+  font-size: 12px;
+  transition: color 0.2s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+#workspaces button:hover label {
+  color: rgb(243, 242, 204);
+}
+
+#workspaces button.active label {
+  color: rgb(243, 242, 204);
+}
+
+#clock {
+  padding: 0px 16px 0px 16px;
+  border-radius: 8px;
+  background-color: rgba(35, 35, 35, 0.25);
+  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+}
+
+#audio {
+  margin: 0px 4px 0px 4px;
+  padding: 0px 16px 0px 8px;
+  border-radius: 8px;
+  background-color: rgba(35, 35, 35, 0.25);
+  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+}
+
+#wireplumber {
+  font-size: 14px;
+  padding: 0px 8px 0px 8px;
+}
+
+#pulseaudio-slider trough {
+  min-width: 64px;
+  min-height: 2px;
+  border-radius: 1px;
+  background-color: rgba(35, 35, 35, 0.25);
+}
+
+#pulseaudio-slider highlight {
+  border-radius: 1px;
+  background-color: rgb(243, 242, 204);
+}
+
+#network {
+  font-size: 12px;
+  margin: 0px 4px 0px 4px;
+  padding: 0px 16px 0px 16px;
+  border-radius: 8px;
+  background-color: rgba(35, 35, 35, 0.25);
+  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+}
+
+#network.disabled, #network.disconnected, #network.linked {
+  color: rgba(35, 35, 35, 0.25);
+}
+
+#custom-poweroff {
+  font-size: 10px;
+  margin-left: 4px;
+  padding: 0px 16px 0px 16px;
+  border-radius: 8px;
+  background-color: rgba(35, 35, 35, 0.25);
+  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+}
+
+#custom-poweroff:hover {
+  color: rgba(35, 35, 35, 0.25);
+}

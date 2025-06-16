@@ -1,0 +1,53 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 32,
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": ["group/audio", "network", "custom/poweroff"],
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "default": "•"
+        },
+        "persistent-only": true,
+        "persistent-workspaces": {
+            "*": 5
+        }
+    },
+    "clock": {
+        "format": "{:%a %b %d · %H:%M}",
+        "tooltip": false
+    },
+    "group/audio": {
+        "orientation": "horizontal",
+        "modules": [
+            "wireplumber",
+            "pulseaudio/slider"
+        ]
+    },
+    "wireplumber": {
+        "format": "{icon}",
+        "format-muted": "",
+        "format-icons": ["", "", ""],
+        "scroll-step": 5,
+        "tooltip": true,
+        "tooltip-format": "{volume}"
+    },
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+    "network": {
+        "format": "",
+        "tooltip": true,
+        "tooltip-format": "{ifname}"
+    },
+    "custom/poweroff": {
+        "format": "",
+        "on-click": "systemctl poweroff",
+        "tooltip": false
+    }
+}

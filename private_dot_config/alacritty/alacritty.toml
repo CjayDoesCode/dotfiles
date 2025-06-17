@@ -5,3 +5,7 @@ import = [
 
 [window]
 padding = { x = 16, y = 16 }
+
+[font]
+normal = { family = "Fira Mono", style = "Regular" }
+size = 12

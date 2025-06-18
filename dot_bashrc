@@ -3,6 +3,8 @@
 alias ls='ls --color=auto'
 alias ll='ls -lah --color=auto'
 alias grep='grep --color=auto'
-PS1='[\u@\h \W]\$ '
+alias edit='helix'
 
 export EDITOR=helix
+
+PS1='[\u@\h \W]\$ '

@@ -2,7 +2,7 @@
   all: unset;
   color: rgb(243, 242, 204);
   font-family: "Inter", "Symbols Nerd Font Mono";
-  font-size: 14;
+  font-size: 14px;
 }
 
 #waybar {
@@ -23,9 +23,9 @@
 
 #workspaces button label {
   color: rgba(243, 242, 204, 0.5);
-  font-size: 12;
+  font-size: 12px;
   min-width: 32px;
-  transition: color 0.2s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: color 0.25s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 #workspaces button:hover label,
@@ -82,7 +82,7 @@
   padding: 0px 16px 0px 16px;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.25);
-  transition: color 0.2s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: color 0.25s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 #custom-poweroff:hover {

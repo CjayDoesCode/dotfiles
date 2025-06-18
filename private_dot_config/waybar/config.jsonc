@@ -43,7 +43,7 @@
     "network": {
         "format": "",
         "tooltip": true,
-        "tooltip-format": "{ifname}"
+        "tooltip-format": "{ipaddr}"
     },
     "custom/poweroff": {
         "format": "",

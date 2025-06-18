@@ -1,12 +1,15 @@
 [general]
+
 import = [
   "~/.config/alacritty/themes/autumn.toml"
 ]
 
 [window]
+
 padding = { x = 16, y = 16 }
 opacity = 1
 
 [font]
+
 normal = { family = "SauceCodePro Nerd Font Mono", style = "Regular" }
 size = 12

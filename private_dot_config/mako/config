@@ -1,29 +1,24 @@
-# style options
-
 font= Inter 10
+
 background-color=#23232380
 text-color=#f3f2cc
+
 width=320
 height=64
+
 outer-margin=10
 margin=8
 padding=8
+
 border-size=2
 border-color=#f3f2cc
-border-radius=8
+border-radius=6
+
 progress-color=over #00000040
-icons=1
-max-icon-size=64
-icon-path=""
-icon-location=left
-icon-border-radius=6
-markup=1
-actions=1
-history=1
-format= <b>%s</b>\n%b
+
+icons=0
+
 text-alignment=center
-default-timeout=10000
+
+default-timeout=0
 ignore-timeout=1
-max-visible=5
-layer=top
-anchor=top-right

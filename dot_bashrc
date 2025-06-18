@@ -1,10 +1,15 @@
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
-alias ll='ls -lah --color=auto'
-alias grep='grep --color=auto'
-alias edit='helix'
+. /usr/share/git/completion/git-prompt.sh
+
+PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 
 export EDITOR=helix
+export HISTCONTROL="erasedups:ignorespace"
 
-PS1='[\u@\h \W]\$ '
+shopt -s autocd
+
+alias edit='helix'
+alias grep='grep --color=auto'
+alias ll='ls -lah --color=auto'
+alias ls='ls --color=auto'

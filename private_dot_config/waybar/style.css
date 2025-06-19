@@ -73,7 +73,7 @@
 #network.disabled,
 #network.disconnected,
 #network.linked {
-  color: rgba(35, 35, 35, 0.25);
+  color: rgb(182, 182, 153);
 }
 
 #custom-poweroff {

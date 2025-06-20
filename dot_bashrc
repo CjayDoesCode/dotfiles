@@ -6,6 +6,7 @@ PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
 
 export EDITOR=helix
 export HISTCONTROL="erasedups:ignorespace"
+export TERMINAL=alacritty
 
 shopt -s autocd
 

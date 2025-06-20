@@ -32,6 +32,7 @@
         "format-muted": "",
         "format-icons": ["", "", ""],
         "scroll-step": 5,
+        "on-click": "pavucontrol",
         "tooltip": true,
         "tooltip-format": "{volume}"
     },
@@ -42,6 +43,7 @@
     },
     "network": {
         "format": "",
+        "on-click": "nm-connection-editor",
         "tooltip": true,
         "tooltip-format": "{ipaddr}"
     },

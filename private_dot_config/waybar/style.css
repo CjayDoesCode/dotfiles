@@ -1,12 +1,12 @@
 * {
   all: unset;
-  color: rgb(243, 242, 204);
+  color: rgb(255, 255, 255);
   font-family: "Inter", "Symbols Nerd Font Mono";
   font-size: 14px;
 }
 
 #waybar {
-  background-color: rgba(35, 35, 35, 0.5);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .modules-left,
@@ -22,15 +22,14 @@
 }
 
 #workspaces button label {
-  color: rgb(182, 182, 153);
+  color: rgba(0, 0, 0, 0.25);
   font-size: 12px;
   min-width: 32px;
   transition: color 0.25s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-#workspaces button:hover label,
 #workspaces button.active label {
-  color: rgb(243, 242, 204);
+  color: rgb(255, 255, 255);
 }
 
 #clock {
@@ -48,18 +47,23 @@
 
 #wireplumber {
   padding: 0px 8px 0px 8px;
+  transition: color 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+#wireplumber:hover {
+  color: rgba(0, 0, 0, 0.25);
 }
 
 #pulseaudio-slider trough {
   min-width: 100px;
   min-height: 2px;
   border-radius: 1px;
-  background-color: rgb(182, 182, 153);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 #pulseaudio-slider highlight {
   border-radius: 1px;
-  background-color: rgb(243, 242, 204);
+  background-color: rgb(255, 255, 255);
 }
 
 #network {
@@ -68,12 +72,17 @@
   padding: 0px 16px 0px 16px;
   border-radius: 8px;
   background-color: rgba(0, 0, 0, 0.25);
+  transition: color 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+#network:hover {
+  color: rgba(0, 0, 0, 0.25);
 }
 
 #network.disabled,
 #network.disconnected,
 #network.linked {
-  color: rgb(182, 182, 153);
+  color: rgba(0, 0, 0, 0.25);
 }
 
 #custom-poweroff {
@@ -86,5 +95,5 @@
 }
 
 #custom-poweroff:hover {
-  color: rgb(182, 182, 153);
+  color: rgba(0, 0, 0, 0.25);
 }

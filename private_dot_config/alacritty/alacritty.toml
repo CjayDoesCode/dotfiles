@@ -1,7 +1,7 @@
 [general]
 
 import = [
-  "~/.config/alacritty/themes/autumn.toml"
+  "~/.config/alacritty/themes/gruvbox_dark.toml"
 ]
 
 [window]

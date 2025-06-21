@@ -33,7 +33,7 @@ window {
 	border-radius: 8px;
 	background-color: @primary-background-color;
 	width: 512px;
-	spacing: 8px;
+	spacing: 16px;
 	children: [ inputbar, listview ];
 }
 

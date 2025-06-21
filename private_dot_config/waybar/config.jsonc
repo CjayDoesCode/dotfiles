@@ -23,11 +23,11 @@
     "group/audio": {
         "orientation": "horizontal",
         "modules": [
-            "wireplumber",
+            "pulseaudio",
             "pulseaudio/slider"
         ]
     },
-    "wireplumber": {
+    "pulseaudio": {
         "format": "{icon}",
         "format-muted": "",
         "format-icons": ["", "", ""],

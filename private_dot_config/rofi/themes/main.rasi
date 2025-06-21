@@ -42,13 +42,16 @@ inputbar {
 	border-radius: 8px;
 	background-color: @primary-background-color;
 	spacing: 8px;
-	children: [ icon-search, entry ];
+	children: [ textbox-search, entry ];
 }
 
-icon-search {
+textbox-search {
 	expand: false;
-	filename: "system-search";
-	size: 16px;
+	content: "";
+	vertical-align: 0.5;
+	horizontal-align: 0.5;
+	width: 16px;
+	font: "Symbols Nerd Font Mono 10";
 }
 
 entry {

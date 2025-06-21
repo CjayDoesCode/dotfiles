@@ -1,0 +1,86 @@
+configuration {
+	modes: "drun";
+	run-command: "uwsm app -- {cmd}";
+	icon-theme: "Papirus-Dark";
+	drun-display-format: "{name}";
+	icon {
+		theme: "Papirus-Dark";
+	}
+}
+
+* {
+	primary-background-color: rgba(0, 0, 0, 0.25);
+	element-normal-text-color: rgba(255, 255, 255, 0.5);
+	element-selected-text-color: rgb(255, 255, 255);
+}
+
+* {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	border-radius: 0px;
+	background-color: transparent;
+	spacing: 0px;
+}
+
+* {
+	font: "Inter 12";
+	text-color: white;
+}
+
+window {
+	padding: 16px;
+	border-radius: 8px;
+	background-color: @primary-background-color;
+	width: 512px;
+	spacing: 8px;
+	children: [ inputbar, listview ];
+}
+
+inputbar {
+	padding: 8px;
+	border-radius: 8px;
+	background-color: @primary-background-color;
+	spacing: 8px;
+	children: [ icon-search, entry ];
+}
+
+icon-search {
+	expand: false;
+	filename: "system-search";
+	size: 16px;
+}
+
+entry {
+	cursor-width: 1px;
+}
+
+listview {
+	lines: 5;
+	cycle: false;
+	spacing: 4px;
+	children: [ element ];
+}
+
+element {
+	spacing: 8px;
+	children: [ element-icon, element-text ];
+}
+
+element normal, element alternate {
+	text-color: @element-normal-text-color;
+}
+
+element selected {
+	text-color: @element-selected-text-color;
+}
+
+element-icon {
+	size: 24px;
+}
+
+element-text {
+	vertical-align: 0.5;
+	text-color: inherit;
+	highlight: none;
+}

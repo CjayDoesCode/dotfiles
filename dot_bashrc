@@ -2,15 +2,17 @@
 
 . /usr/share/git/completion/git-prompt.sh
 
-PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
-
 export EDITOR=helix
 export HISTCONTROL="erasedups:ignorespace"
-export TERMINAL=alacritty
+export TERMINAL=kitty
 
 shopt -s autocd
 
 alias edit='helix'
 alias grep='grep --color=auto'
-alias ll='ls -lah --color=auto'
 alias ls='ls --color=auto'
+alias ll='ls -lah --color=auto'
+
+BLUE='\[\e[34m\]'
+RESET='\[\e[0m\]'
+export PS1="${BLUE}\u${RESET}@\h ${BLUE}\w${RESET}$(__git_ps1 ' (%s)')> "

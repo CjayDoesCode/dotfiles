@@ -1,97 +1,72 @@
-@define-color primary-background-color rgba(0, 0, 0, 0.25);
-@define-color primary-foreground-color white;
+@define-color bg1 rgba(40, 40, 40, 0.5);
+@define-color fg1 rgb(235, 219, 178);
+@define-color fg2 rgba(40, 40, 40, 0.25);
 
 * {
   all: unset;
-  color: @primary-text-color;
-  font-family: "Inter", "Symbols Nerd Font Mono";
-  font-size: 14px;
-  transition: color 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  
+  color: @fg1;
+  font: 16px "Inter", "Symbols Nerd Font Mono";
+  
+  min-width: 0px;
+  min-height: 0px;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  outline: 0px;
+  
+  background-color: transparent;
+  transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-#waybar {
-  background-color: @primary-background-color;
+tooltip > box {
+  margin: -6px;
 }
 
-.modules-left,
-.modules-center,
-.modules-right {
-  margin: 4px 8px 4px 8px;
-}
-
-#workspaces {
-  padding: 0px 8px 0px 8px;
+tooltip > box > label {
+  margin: 4px;
+  padding: 6px;
   border-radius: 8px;
-  background-color: @primary-background-color;
+  background-color: @bg1;
 }
 
-#workspaces button label {
-  color: @primary-background-color;
-  font-size: 12px;
+#waybar > box {
+  background-color: @bg1;
+  min-height: 32px;
+  margin: 8px 8px 0px 8px;
+  padding: 0px 12px 0px 12px;
+  border-radius: 8px;
+}
+
+#workspaces > button > box {
   min-width: 32px;
 }
 
-#workspaces button.active label {
-  color: @primary-foreground-color;
+#workspaces > button > box > label {
+  font-size: 8px;
+  color: @fg2;
 }
 
-#clock {
-  padding: 0px 16px 0px 16px;
-  border-radius: 8px;
-  background-color: @primary-background-color;
-}
-
-#audio {
-  margin-right: 4px;
-  padding: 0px 16px 0px 8px;
-  border-radius: 8px;
-  background-color: @primary-background-color;
-}
-
-#pulseaudio {
-  font-size: 14px;
-  padding: 0px 8px 0px 8px;
-}
-
-#pulseaudio:hover {
-  color: @primary-background-color;
-}
-
-#pulseaudio-slider trough {
-  min-width: 100px;
-  min-height: 2px;
-  border-radius: 1px;
-  background-color: @primary-background-color;
-}
-
-#pulseaudio-slider highlight {
-  border-radius: 1px;
-  background-color: @primary-foreground-color;
+#workspaces > button.active > box > label {
+  color: @fg1;
 }
 
 #network {
-  font-size: 12px;
-  margin: 0px 4px 0px 4px;
-  padding: 0px 16px 0px 16px;
-  border-radius: 8px;
-  background-color: @primary-background-color;
+  min-width: 32px;
 }
 
-#network:hover,
-#network.disabled,
-#network.disconnected,
-#network.linked {
-  color: @primary-background-color;
+#network.disabled, #network.disconnected, #network.linked {
+  color: @bg1;
 }
 
-#custom-poweroff {
-  font-size: 10px;
-  margin-left: 4px;
-  padding: 0px 16px 0px 16px;
-  border-radius: 8px;
-  background-color: @primary-background-color;
+#pulseaudio {
+  min-width: 32px;
 }
 
-#custom-poweroff:hover {
-  color: @primary-background-color;
+#battery {
+  min-width: 32px;
+}
+
+#clock {
+  min-width: 64px;
 }

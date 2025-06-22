@@ -9,9 +9,9 @@ configuration {
 }
 
 * {
-	primary-background-color: rgba(0, 0, 0, 0.25);
-	element-normal-text-color: rgba(255, 255, 255, 0.5);
-	element-selected-text-color: rgb(255, 255, 255);
+	bg1: rgba(40, 40, 40, 0.5);
+	fg1: rgb(235, 219, 178);
+	fg2: rgba(235, 219, 178, 0.5);
 }
 
 * {
@@ -25,22 +25,19 @@ configuration {
 
 * {
 	font: "Inter 12";
-	text-color: white;
+	text-color: @fg1;
 }
 
 window {
 	padding: 16px;
 	border-radius: 8px;
-	background-color: @primary-background-color;
+	background-color: @bg1;
 	width: 512px;
 	spacing: 16px;
 	children: [ inputbar, listview ];
 }
 
 inputbar {
-	padding: 8px;
-	border-radius: 8px;
-	background-color: @primary-background-color;
 	spacing: 8px;
 	children: [ textbox-search, entry ];
 }
@@ -50,8 +47,8 @@ textbox-search {
 	content: "";
 	vertical-align: 0.5;
 	horizontal-align: 0.5;
-	width: 16px;
-	font: "Symbols Nerd Font Mono 10";
+	width: 24px;
+	font: "Symbols Nerd Font Mono 12";
 }
 
 entry {
@@ -71,11 +68,11 @@ element {
 }
 
 element normal, element alternate {
-	text-color: @element-normal-text-color;
+	text-color: @fg2;
 }
 
 element selected {
-	text-color: @element-selected-text-color;
+	text-color: @fg1;
 }
 
 element-icon {

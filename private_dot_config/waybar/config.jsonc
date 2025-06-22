@@ -1,55 +1,37 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 32,
     "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["clock"],
-    "modules-right": ["group/audio", "network", "custom/poweroff"],
+    "modules-right": ["network", "pulseaudio", "battery", "clock"],
     "hyprland/workspaces": {
-        "format": "{icon}",
-        "format-icons": {
-            "1": "",
-            "default": "•"
-        },
+        "format": "",
         "persistent-only": true,
         "persistent-workspaces": {
             "*": 5
         }
     },
-    "clock": {
-        "format": "{:%a %b %d · %H:%M}",
-        "tooltip": false
-    },
-    "group/audio": {
-        "orientation": "horizontal",
-        "modules": [
-            "pulseaudio",
-            "pulseaudio/slider"
-        ]
+    "network": {
+        "format": "",
+        "tooltip": true,
+        "tooltip-format": "{ipaddr}"
     },
     "pulseaudio": {
         "format": "{icon}",
         "format-muted": "",
         "format-icons": ["", "", ""],
         "scroll-step": 5,
-        "on-click": "pavucontrol",
         "tooltip": true,
-        "tooltip-format": "{volume}"
+        "tooltip-format": "{volume}%"
     },
-    "pulseaudio/slider": {
-        "min": 0,
-        "max": 100,
-        "orientation": "horizontal"
-    },
-    "network": {
-        "format": "",
-        "on-click": "nm-connection-editor",
+    "battery": {
+        "format": "{icon}",
+        "format-icons": ["", "", "", "", ""],
         "tooltip": true,
-        "tooltip-format": "{ipaddr}"
+        "tooltip-format": "{capacity}%"
     },
-    "custom/poweroff": {
-        "format": "",
-        "on-click": "systemctl poweroff",
-        "tooltip": false
-    }
+    "clock": {
+        "format": "{:%R}",
+        "tooltip": true,
+        "tooltip-format": "{:%A, %B %d, %Y}"
+    },
 }

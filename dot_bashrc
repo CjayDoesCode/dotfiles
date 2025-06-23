@@ -14,6 +14,6 @@ alias grep="grep --color=auto"
 alias ls="ls --color=auto"
 alias ll="ls -lah --color=auto"
 
-BLUE="\[\e[34m\]"
+MAGENTA="\[\e[35m\]"
 RESET="\[\e[0m\]"
-export PS1="${BLUE}\u${RESET}@\h ${BLUE}\w${RESET}\$(__git_ps1 ' (%s)')> "
+export PS1="${MAGENTA}\u${RESET}@\h ${MAGENTA}\w${RESET}\$(__git_ps1 ' (%s)')> "

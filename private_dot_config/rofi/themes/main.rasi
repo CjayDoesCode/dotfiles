@@ -9,9 +9,9 @@ configuration {
 }
 
 * {
-	bg1: rgba(40, 40, 40, 0.5);
-	fg1: rgb(235, 219, 178);
-	fg2: rgba(235, 219, 178, 0.5);
+	bg-color: rgba(40, 40, 40, 0.9);
+	fg-color: rgb(235, 219, 178);
+	dark-gray-color: rgb(146, 131, 116);
 }
 
 * {
@@ -25,13 +25,13 @@ configuration {
 
 * {
 	font: "Inter 12";
-	text-color: @fg1;
+	text-color: @fg-color;
 }
 
 window {
 	padding: 16px;
 	border-radius: 8px;
-	background-color: @bg1;
+	background-color: @bg-color;
 	width: 512px;
 	spacing: 16px;
 	children: [ inputbar, listview ];
@@ -68,11 +68,11 @@ element {
 }
 
 element normal, element alternate {
-	text-color: @fg2;
+	text-color: @dark-gray-color;
 }
 
 element selected {
-	text-color: @fg1;
+	text-color: @fg-color;
 }
 
 element-icon {

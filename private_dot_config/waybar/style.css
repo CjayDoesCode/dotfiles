@@ -1,41 +1,31 @@
-@define-color bg1 rgba(40, 40, 40, 0.5);
-@define-color fg1 rgb(235, 219, 178);
-@define-color fg2 rgba(40, 40, 40, 0.25);
+@define-color bg-color rgba(40, 40, 40, 0.9);
+@define-color fg-color rgb(235, 219, 178);
+@define-color dark-gray-color rgb(146, 131, 116);
 
 * {
   all: unset;
   
-  color: @fg1;
+  color: @fg-color;
   font: 16px "Inter", "Symbols Nerd Font Mono";
   
   min-width: 0px;
   min-height: 0px;
+  
   margin: 0px;
   padding: 0px;
+
   border: 0px;
   outline: 0px;
   
   background-color: transparent;
+  
   transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-tooltip > box {
-  margin: -6px;
-}
-
-tooltip > box > label {
-  margin: 4px;
-  padding: 6px;
-  border-radius: 8px;
-  background-color: @bg1;
-}
-
 #waybar > box {
-  background-color: @bg1;
   min-height: 32px;
-  margin: 8px 8px 0px 8px;
-  padding: 0px 12px 0px 12px;
-  border-radius: 8px;
+  padding: 0px 8px;
+  background-color: @bg-color;
 }
 
 #workspaces > button > box {
@@ -43,20 +33,22 @@ tooltip > box > label {
 }
 
 #workspaces > button > box > label {
+  color: @dark-gray-color;
   font-size: 8px;
-  color: @fg2;
 }
 
 #workspaces > button.active > box > label {
-  color: @fg1;
+  color: @fg-color;
 }
 
 #network {
   min-width: 32px;
 }
 
-#network.disabled, #network.disconnected, #network.linked {
-  color: @bg1;
+#network.linked,
+#network.disabled,
+#network.disconnected {
+  color: @bg-color;
 }
 
 #pulseaudio {

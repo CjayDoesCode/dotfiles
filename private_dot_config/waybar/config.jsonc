@@ -12,26 +12,22 @@
     },
     "network": {
         "format": "",
-        "tooltip": true,
-        "tooltip-format": "{ipaddr}"
+        "tooltip": false
     },
     "pulseaudio": {
         "format": "{icon}",
         "format-muted": "",
         "format-icons": ["", "", ""],
         "scroll-step": 5,
-        "tooltip": true,
-        "tooltip-format": "{volume}%"
+        "tooltip": false
     },
     "battery": {
         "format": "{icon}",
         "format-icons": ["", "", "", "", ""],
-        "tooltip": true,
-        "tooltip-format": "{capacity}%"
+        "tooltip": false
     },
     "clock": {
         "format": "{:%R}",
-        "tooltip": true,
-        "tooltip-format": "{:%A, %B %d, %Y}"
+        "tooltip": false
     },
 }

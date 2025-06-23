@@ -5,19 +5,20 @@
         "source": "~/Pictures/roadcrow__.png",
         "height": 12,
         "padding": {
-            "top": 0,
-            "left": 0,
-            "right": 2
+            "right": 1
         }
     },
     "display": {
-        "color": {
-            "keys": "blue",
-            "title": "blue",
-        }
+        "color": "magenta",
+        "brightColor": false
     },
     "modules": [
-        "title",
+        {
+            "type": "title",
+            "color": {
+                "host": "default"
+            }  
+        },
         "separator",
         "os",
         {

@@ -1,86 +1,70 @@
-configuration {
-	modes: "drun";
-	run-command: "uwsm app -- {cmd}";
-	icon-theme: "Papirus-Dark";
-	drun-display-format: "{name}";
-	icon {
-		theme: "Papirus-Dark";
-	}
-}
-
 * {
-	bg-color: rgba(40, 40, 40, 0.9);
-	fg-color: rgb(235, 219, 178);
-	dark-gray-color: rgb(146, 131, 116);
-}
-
-* {
-	padding: 0px;
-	margin: 0px;
-	border: 0px;
-	border-radius: 0px;
-	background-color: transparent;
-	spacing: 0px;
-}
-
-* {
-	font: "Inter 12";
-	text-color: @fg-color;
+	bg-color:          rgba(40, 40, 40, 0.9);
+	fg-color:          rgb(235, 219, 178);
+	dark-gray-color:   rgb(146, 131, 116);
+	spacing:           0;
+	padding:           0;
+	margin:            0;
+	border:            0;
+	border-radius:     0;
+	background-color:  transparent;
+	font:              "Inter 12";
+	text-color:        var(fg-color);
 }
 
 window {
-	padding: 16px;
-	border-radius: 8px;
-	background-color: @bg-color;
-	width: 512px;
-	spacing: 16px;
-	children: [ inputbar, listview ];
+	spacing:           16px;
+	padding:           16px;
+	border-radius:     8px;
+	background-color:  var(bg-color);
+	location:          north;
+	anchor:            north;
+	width:             512px;
+	y-offset:          8px;
+	children:          [ inputbar, listview ];
 }
 
 inputbar {
-	spacing: 8px;
-	children: [ textbox-search, entry ];
+	spacing:   8px;
+	children:  [ textbox-prompt, entry ];
 }
 
-textbox-search {
-	expand: false;
-	content: "";
-	vertical-align: 0.5;
-	horizontal-align: 0.5;
-	width: 24px;
-	font: "Symbols Nerd Font Mono 12";
+textbox-prompt {
+	font:              "Symbols Nerd Font Mono 12";
+	content:           "";
+	vertical-align:    0.5;
+	horizontal-align:  0.5;
+	width:             24px;
+	expand:            false;
 }
 
 entry {
-	cursor-width: 1px;
+	cursor-width:  1px;
 }
 
 listview {
-	lines: 5;
-	cycle: false;
-	spacing: 4px;
-	children: [ element ];
+	spacing:   4px;
+	cycle:     false;
+	lines:     5;
+	children:  [ element ];
 }
 
 element {
-	spacing: 8px;
-	children: [ element-icon, element-text ];
-}
-
-element normal, element alternate {
-	text-color: @dark-gray-color;
+	spacing:     8px;
+	text-color:  var(dark-gray-color);
+	children:    [ element-icon, element-text ];
 }
 
 element selected {
-	text-color: @fg-color;
+	text-color:  var(fg-color);
 }
 
 element-icon {
-	size: 24px;
+	size:  24px;
 }
 
 element-text {
-	vertical-align: 0.5;
-	text-color: inherit;
-	highlight: none;
+	vertical-align:  0.5;
+	text-color:      inherit;
+	highlight:       none;
 }

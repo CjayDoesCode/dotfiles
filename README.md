@@ -1,5 +1,5 @@
+![](preview.png)
+
 # Dotfiles
 
-Personal dotfiles for a minimal Hyprland setup.
-
-![](preview.png)
+Minimal dotfiles for an Arch Linux Hyprland setup.

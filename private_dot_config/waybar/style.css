@@ -1,30 +1,24 @@
-@define-color bg-color rgba(40, 40, 40, 0.9);
-@define-color fg-color rgb(235, 219, 178);
-@define-color dark-gray-color rgb(146, 131, 116);
+@define-color  bg-color         rgba(40, 40, 40, 0.9);
+@define-color  fg-color         rgb(235, 219, 178);
+@define-color  dark-gray-color  rgb(146, 131, 116);
 
 * {
-  all: unset;
-  
-  color: @fg-color;
-  font: 16px "Inter", "Symbols Nerd Font Mono";
-  
-  min-width: 0px;
-  min-height: 0px;
-  
-  margin: 0px;
-  padding: 0px;
-
-  border: 0px;
-  outline: 0px;
-  
+  all:              unset;
+  color:            @fg-color;
+  font:             16px "Inter", "Symbols Nerd Font Mono";
+  min-width:        0;
+  min-height:       0;
+  margin:           0;
+  padding:          0;
+  border:           0;
+  outline:          0;
   background-color: transparent;
-  
-  transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+  transition:       all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 #waybar > box {
-  min-height: 32px;
-  padding: 0px 8px;
+  min-height:       32px;
+  padding:          0px 8px;
   background-color: @bg-color;
 }
 
@@ -33,7 +27,7 @@
 }
 
 #workspaces > button > box > label {
-  color: @dark-gray-color;
+  color:     @dark-gray-color;
   font-size: 8px;
 }
 
@@ -42,23 +36,30 @@
 }
 
 #network {
-  min-width: 32px;
+  min-width:  32px;
+  margin-top: 1px;
+}
+
+#clock > widget > label {
+  padding: 0px 8px;
 }
 
 #network.linked,
 #network.disabled,
 #network.disconnected {
-  color: @bg-color;
+  color: @dark-gray-color;
 }
 
-#pulseaudio {
-  min-width: 32px;
+#pulseaudio > widget > label {
+  min-width:   32px;
+  padding-top: 1px;
 }
 
-#battery {
-  min-width: 32px;
+#battery > widget > label {
+  min-width:   32px;
+  padding-top: 1px;
 }
 
-#clock {
-  min-width: 64px;
+.tooltip {
+  padding: 0px 8px;
 }

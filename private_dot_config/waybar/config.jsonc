@@ -2,7 +2,8 @@
     "layer": "top",
     "position": "top",
     "modules-left": ["hyprland/workspaces"],
-    "modules-right": ["network", "pulseaudio", "battery", "clock"],
+    "modules-center": ["group/clock"],
+    "modules-right": ["network", "group/pulseaudio", "group/battery"],
     "hyprland/workspaces": {
         "format": "",
         "persistent-only": true,
@@ -10,9 +11,39 @@
             "*": 5
         }
     },
+    "group/clock": {
+        "orientation": "horizontal",
+        "modules": [
+            "clock",
+            "clock#tooltip"
+        ],
+        "drawer": {
+            "transition-duration": 500,
+            "transition-left-to-right": false
+        }
+    },
+    "clock": {
+        "format": "{:%R}",
+        "tooltip": false
+    },
+    "clock#tooltip": {
+        "format": "{:%A, %B %d, %Y}",
+        "tooltip": false
+    },
     "network": {
         "format": "",
         "tooltip": false
+    },
+    "group/pulseaudio": {
+        "orientation": "horizontal",
+        "modules": [
+            "pulseaudio",
+            "pulseaudio#tooltip"
+        ],
+        "drawer": {
+            "transition-duration": 500,
+            "transition-left-to-right": false
+        }
     },
     "pulseaudio": {
         "format": "{icon}",
@@ -21,13 +52,28 @@
         "scroll-step": 5,
         "tooltip": false
     },
+    "pulseaudio#tooltip": {
+        "format": "{volume}%",
+        "tooltip": false
+    },
+    "group/battery": {
+        "orientation": "horizontal",
+        "modules": [
+            "battery",
+            "battery#tooltip"
+        ],
+        "drawer": {
+            "transition-duration": 500,
+            "transition-left-to-right": false
+        }
+    },
     "battery": {
         "format": "{icon}",
         "format-icons": ["", "", "", "", ""],
         "tooltip": false
     },
-    "clock": {
-        "format": "{:%R}",
+    "battery#tooltip": {
+        "format": "{capacity}%",
         "tooltip": false
-    },
+    }
 }

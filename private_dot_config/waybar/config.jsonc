@@ -18,7 +18,7 @@
             "clock#tooltip"
         ],
         "drawer": {
-            "transition-duration": 500,
+            "transition-duration": 250,
             "transition-left-to-right": false
         }
     },
@@ -41,7 +41,7 @@
             "pulseaudio#tooltip"
         ],
         "drawer": {
-            "transition-duration": 500,
+            "transition-duration": 250,
             "transition-left-to-right": false
         }
     },
@@ -63,7 +63,7 @@
             "battery#tooltip"
         ],
         "drawer": {
-            "transition-duration": 500,
+            "transition-duration": 250,
             "transition-left-to-right": false
         }
     },

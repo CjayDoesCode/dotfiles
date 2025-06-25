@@ -41,7 +41,7 @@
 }
 
 #clock > widget > label {
-  padding: 0px 8px;
+  min-width: 64px;
 }
 
 #network.linked,

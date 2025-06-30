@@ -6,8 +6,6 @@ set -euo pipefail
 #   variables
 # ------------------------------------------------------------------------------
 
-github_username="CjayDoesCode"
-
 pkgs=(
   "bottom"
   "chezmoi"
@@ -52,6 +50,17 @@ theme_pkgs=(
 
 pkgs+=("${hyprland_pkgs[@]}" "${font_pkgs[@]}" "${theme_pkgs[@]}")
 
+github_username="CjayDoesCode"
+
+declare -A gsettings_values=(
+  ["color-scheme"]="prefer-dark"
+  ["cursor-theme"]="capitaine-cursors-light"
+  ["cursor-size"]="24"
+  ["font-name"]="Inter 12"
+  ["icon-theme"]="Papirus-Dark"
+  ["gtk-theme"]="Orchis-Dark-Compact"
+)
+
 # ------------------------------------------------------------------------------
 #   checks
 # ------------------------------------------------------------------------------
@@ -74,6 +83,10 @@ systemctl --user enable \
   xdg-user-dirs-update.service
 
 chezmoi init --apply "${github_username}"
+
+for key in "${!gsettings_values[@]}"; do
+  gsettings set org.gnome.desktop.interface "$key" "${gsettings_values[$key]}"
+done
 
 read -rp $'\n'"Keep chezmoi? [Y/n]: " input
 if [[ "${input}" =~ ^[nN]$ ]]; then

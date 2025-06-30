@@ -48,8 +48,6 @@ theme_pkgs=(
   "papirus-icon-theme"
 )
 
-pkgs+=("${hyprland_pkgs[@]}" "${font_pkgs[@]}" "${theme_pkgs[@]}")
-
 github_username="CjayDoesCode"
 
 declare -A gsettings_values=(
@@ -74,7 +72,11 @@ fi
 #   Installation
 # ------------------------------------------------------------------------------
 
-sudo pacman -S --noconfirm --needed "${pkgs[@]}"
+sudo pacman -S --noconfirm --needed \
+  "${pkgs[@]}" \
+  "${hyprland_pkgs[@]}" \
+  "${font_pkgs[@]}" \
+  "${theme_pkgs[@]}"
 
 systemctl --user enable \
   hyprpaper.service \
@@ -85,7 +87,9 @@ systemctl --user enable \
 chezmoi init --apply "${github_username}"
 
 for key in "${!gsettings_values[@]}"; do
-  gsettings set org.gnome.desktop.interface "$key" "${gsettings_values[$key]}"
+  gsettings set org.gnome.desktop.interface \
+    "${key}" \
+    "${gsettings_values["${key}"]}"
 done
 
 read -rp $'\n'"Keep chezmoi? [Y/n]: " input

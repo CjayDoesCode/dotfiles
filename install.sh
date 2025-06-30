@@ -22,6 +22,7 @@ pkgs=(
   "firefox"
   "grim"
   "helix"
+  "imagemagick"
   "kitty"
   "rofi-wayland"
   "slurp"

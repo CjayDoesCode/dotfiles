@@ -111,6 +111,7 @@ if [[ ! "${install_osu}" =~ ^[nN] ]]; then
   curl \
     --output ~/Games/osu-lazer/osu.AppImage \
     --location https://github.com/ppy/osu/releases/latest/download/osu.AppImage
+  chmod +x ~/Games/osu-lazer/osu.AppImage
 else
   rm --force ~/.local/share/applications/osu-lazer.desktop
   rm --force ~/.local/share/icons/hicolor/24x24/osu-lazer-logo.png

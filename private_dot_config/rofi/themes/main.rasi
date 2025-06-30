@@ -1,41 +1,41 @@
 * {
-	bg-color:         rgba(40, 40, 40, 0.9);
-	fg-color:         rgb(235, 219, 178);
-	dark-gray-color:  rgb(146, 131, 116);
-	spacing:          0;
-	padding:          0;
-	margin:           0;
-	border:           0;
-	border-radius:    0;
+	bg-color: rgba(40, 40, 40, 0.9);
+	fg-color: rgb(235, 219, 178);
+	dark-gray-color: rgb(146, 131, 116);
+	spacing: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	border-radius: 0;
 	background-color: transparent;
-	font:             "Inter 12";
-	text-color:       var(fg-color);
+	font: "Inter 12";
+	text-color: var(fg-color);
 }
 
 window {
-	spacing:          16px;
-	padding:          16px;
-	border-radius:    8px;
+	spacing: 16px;
+	padding: 16px;
+	border-radius: 8px;
 	background-color: var(bg-color);
-	location:         north;
-	anchor:           north;
-	width:            512px;
-	y-offset:         8px;
-	children:         [ inputbar, listview ];
+	location: north;
+	anchor: north;
+	width: 512px;
+	y-offset: 8px;
+	children: [ inputbar, listview ];
 }
 
 inputbar {
-	spacing:  8px;
+	spacing: 8px;
 	children: [ textbox-prompt, entry ];
 }
 
 textbox-prompt {
-	font:             "Symbols Nerd Font Mono 12";
-	content:          "";
-	vertical-align:   0.5;
+	font: "Symbols Nerd Font Mono 12";
+	content: "";
+	vertical-align: 0.5;
 	horizontal-align: 0.5;
-	width:            24px;
-	expand:           false;
+	width: 24px;
+	expand: false;
 }
 
 entry {
@@ -43,16 +43,16 @@ entry {
 }
 
 listview {
-	spacing:  4px;
-	cycle:    false;
-	lines:    5;
+	spacing: 4px;
+	cycle: false;
+	lines: 5;
 	children: [ element ];
 }
 
 element {
-	spacing:    8px;
+	spacing: 8px;
 	text-color: var(dark-gray-color);
-	children:   [ element-icon, element-text ];
+	children: [ element-icon, element-text ];
 }
 
 element selected {
@@ -65,6 +65,6 @@ element-icon {
 
 element-text {
 	vertical-align: 0.5;
-	text-color:     inherit;
-	highlight:      none;
+	text-color: inherit;
+	highlight: none;
 }

@@ -1,6 +1,6 @@
 [[ $- != *i* ]] && return
 
-. /usr/share/git/completion/git-prompt.sh
+source /usr/share/git/completion/git-prompt.sh
 
 export EDITOR=helix
 export GIT_PS1_SHOWDIRTYSTATE=1

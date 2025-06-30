@@ -3,6 +3,15 @@
 set -euo pipefail
 
 # ------------------------------------------------------------------------------
+#   checks
+# ------------------------------------------------------------------------------
+
+if [[ "$(id -u)" -eq 0 ]]; then
+  echo "This script must not be executed with root privileges."
+  exit 1
+fi
+
+# ------------------------------------------------------------------------------
 #   variables
 # ------------------------------------------------------------------------------
 
@@ -60,19 +69,18 @@ declare -A gsettings_values=(
 )
 
 # ------------------------------------------------------------------------------
-#   checks
+#   user input
 # ------------------------------------------------------------------------------
 
-if [[ "$(id -u)" -eq 0 ]]; then
-  echo "This script must not be executed with root privileges."
-  exit 1
-fi
+read -rp $'\n'"Install osu!(lazer)? [Y/n]: " install_osu
+read -rp $'\n'"Keep chezmoi? [Y/n]: " keep_chezmoi
+read -rp $'\n'"Reboot after installation? [Y/n]: " reboot
 
 # ------------------------------------------------------------------------------
 #   Installation
 # ------------------------------------------------------------------------------
 
-sudo pacman -S --noconfirm --needed \
+sudo pacman --sync --noconfirm --needed \
   "${pkgs[@]}" \
   "${hyprland_pkgs[@]}" \
   "${font_pkgs[@]}" \
@@ -84,19 +92,28 @@ systemctl --user enable \
   waybar.service \
   xdg-user-dirs-update.service
 
-chezmoi init --apply "${github_username}"
-
 for key in "${!gsettings_values[@]}"; do
   gsettings set org.gnome.desktop.interface \
     "${key}" \
     "${gsettings_values["${key}"]}"
 done
 
-read -rp $'\n'"Keep chezmoi? [Y/n]: " input
-if [[ "${input}" =~ ^[nN]$ ]]; then
-  chezmoi purge
-  sudo pacman -Rns --noconfirm chezmoi
+chezmoi init --apply --force "${github_username}"
+
+if [[ ! "${install_osu}" =~ ^[nN] ]]; then
+  mkdir --parents ~/Games/osu-lazer
+  curl \
+    --output ~/Games/osu-lazer/osu.AppImage \
+    --location https://github.com/ppy/osu/releases/latest/download/osu.AppImage
+else
+  rm --force ~/.local/share/applications/osu-lazer.desktop
+  rm --force ~/.local/share/icons/hicolor/24x24/osu-lazer-logo.png
+  rmdir --ignore-fail-on-non-empty ~/.local/share/icons/hicolor/24x24
 fi
 
-read -rp $'\n'"Installation completed. Reboot now? [Y/n]: " input
-[[ ! "${input}" =~ ^[nN]$ ]] && reboot
+if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
+  chezmoi purge --force
+  sudo pacman --remove --nosave --recursive --noconfirm chezmoi
+fi
+
+[[ ! "${reboot}" =~ ^[nN]$ ]] && reboot

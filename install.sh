@@ -15,9 +15,6 @@ pkgs=(
   "firefox"
   "grim"
   "helix"
-  "hyprland"
-  "hyprpaper"
-  "hyprpolkitagent"
   "imagemagick"
   "kitty"
   "rofi-wayland"
@@ -26,8 +23,14 @@ pkgs=(
   "waybar"
   "wl-clipboard"
   "xdg-desktop-portal-gtk"
-  "xdg-desktop-portal-hyprland"
   "xdg-user-dirs"
+)
+
+hyprland_pkgs=(
+  "hyprland"
+  "hyprpaper"
+  "hyprpolkitagent"
+  "xdg-desktop-portal-hyprland"
 )
 
 font_pkgs=(
@@ -48,7 +51,7 @@ theme_pkgs=(
   "papirus-icon-theme"
 )
 
-pkgs+=("${font_pkgs[@]}" "${theme_pkgs[@]}")
+pkgs+=("${hyprland_pkgs[@]}" "${font_pkgs[@]}" "${theme_pkgs[@]}")
 
 # ------------------------------------------------------------------------------
 #   checks

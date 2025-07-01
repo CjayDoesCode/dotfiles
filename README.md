@@ -4,33 +4,30 @@
 
 Dotfiles for a simple Arch Linux Hyprland setup.
 
-<br/>
+**System**  
+- **Shell:** `bash`  
+- **Terminal Emulator:** `kitty`  
+- **System Information:** `fastfetch`  
+- **System Monitor:** `bottom`  
+- **Browser:** `firefox`  
 
-- **Shell:** `bash`
-- **Terminal Emulator:** `kitty`
-- **System Information:** `fastfetch`
-- **System Monitor:** `bottom`
-- **Browser:** `firefox`
+**Utilities**  
+- **Status Bar:** `waybar`  
+- **Wallpaper Utility:** `hyprpaper`  
+- **Application Launcher:** `rofi-wayland`  
+- **Screenshotting:** `grim` `slurp` `wl-clipboard`  
 
-<br/>
+**Appearance**  
+- **GTK Theme:** `orchis-theme`  
+- **Icon Theme:** `papirus-icon-theme`  
+- **Cursor Theme:** `capitaine-cursors`  
 
-- **Status Bar:** `waybar`
-- **Wallpaper Utility:** `hyprpaper`
-- **Application Launcher:** `rofi-wayland`
-- **Screenshotting Utilities:** `grim` `slurp` `wl-clipboard`
+**Extras**  
+- **Wallpaper:** From the [osu! Midnight Moment Art Contest](https://osu.ppy.sh/community/contests/226) by [tehfire](https://osu.ppy.sh/users/7082924)  
+- **Fastfetch Logo:** From the [osu! Spring 2024 Fanart Contest](https://osu.ppy.sh/community/contests/205) by [roadcrow__](https://osu.ppy.sh/users/11752694)  
 
-<br/>
-
-- **GTK Theme:** `orchis-theme`
-- **Icon Theme:** `papirus-icon-theme`
-- **Cursor Theme:** `capitaine-cursors`
-
-<br/>
-
-- **Wallpaper:** From the [osu! Midnight Moment Art Contest](https://osu.ppy.sh/community/contests/226) by [tehfire](https://osu.ppy.sh/users/7082924).
-- **Fastfetch Logo:** From the [osu! Spring 2024 Fanart Contest](https://osu.ppy.sh/community/contests/205) by [roadcrow__](https://osu.ppy.sh/users/11752694).
-
-<br/>
+**Optional**  
+- **Game:** osu!(lazer)
 
 ## Installation
 

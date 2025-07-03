@@ -6,7 +6,7 @@ set -euo pipefail
 #   checks
 # ------------------------------------------------------------------------------
 
-if [[ "$EUID" -eq 0 ]]; then
+if [[ "${EUID}" -eq 0 ]]; then
   printf "\nThis script must not be run as root.\n\n"
   exit 1
 fi
@@ -96,23 +96,24 @@ systemctl --user enable \
 
 printf "\nConfiguring GTK...\n"
 for key in "${!gsettings_values[@]}"; do
-  gsettings set org.gnome.desktop.interface "$key" "${gsettings_values["$key"]}"
+  gsettings set org.gnome.desktop.interface \
+    "${key}" "${gsettings_values["${key}"]}"
 done
 
 printf "\nInstalling dotfiles...\n"
-chezmoi init --apply --force "$github_username"
+chezmoi init --apply --force "${github_username}"
 
-if [[ ! "$install_osu" =~ ^[nN] ]]; then
+if [[ ! "${install_osu}" =~ ^[nN] ]]; then
   printf "\nInstalling osu!(lazer)...\n"
-  mkdir --parents "$HOME/.local/bin"
+  mkdir --parents "${HOME}/.local/bin"
   curl \
-    --output "$HOME/.local/bin/osu" \
+    --output "${HOME}/.local/bin/osu" \
     --location https://github.com/ppy/osu/releases/latest/download/osu.AppImage
-  chmod +x "$HOME/.local/bin/osu"
+  chmod +x "${HOME}/.local/bin/osu"
 else
-  rm --force "$HOME/.local/share/applications/osu.desktop"
-  rm --force "$HOME/.local/share/icons/hicolor/128x128/apps/osu-logo.png"
-  chezmoi forget --force "$HOME/.local"
+  rm --force "${HOME}/.local/share/applications/osu.desktop"
+  rm --force "${HOME}/.local/share/icons/hicolor/128x128/apps/osu-logo.png"
+  chezmoi forget --force "${HOME}/.local"
 fi
 
 if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then

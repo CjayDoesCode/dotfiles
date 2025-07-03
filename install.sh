@@ -6,8 +6,8 @@ set -euo pipefail
 #   checks
 # ------------------------------------------------------------------------------
 
-if [[ "$(id -u)" -eq 0 ]]; then
-  printf "\nThis script must not be executed with root privileges.\n\n"
+if [[ "$EUID" -eq 0 ]]; then
+  printf "\nThis script must not be run as root.\n\n"
   exit 1
 fi
 
@@ -15,7 +15,7 @@ fi
 #   variables
 # ------------------------------------------------------------------------------
 
-pkgs=(
+packages=(
   "bottom"
   "chezmoi"
   "fastfetch"
@@ -26,6 +26,7 @@ pkgs=(
   "kitty"
   "rofi-wayland"
   "slurp"
+  "udiskie"
   "uwsm"
   "waybar"
   "wl-clipboard"
@@ -33,15 +34,16 @@ pkgs=(
   "xdg-user-dirs"
 )
 
-hyprland_pkgs=(
+# hyprland packages
+packages+=(
   "hyprland"
   "hyprpaper"
   "hyprpolkitagent"
   "xdg-desktop-portal-hyprland"
 )
 
-font_pkgs=(
-  "adobe-source-code-pro-fonts"
+# font packages
+packages+=(
   "inter-font"
   "noto-fonts"
   "noto-fonts-cjk"
@@ -52,7 +54,8 @@ font_pkgs=(
   "ttf-sourcecodepro-nerd"
 )
 
-theme_pkgs=(
+# theme packages
+packages+=(
   "capitaine-cursors"
   "orchis-theme"
   "papirus-icon-theme"
@@ -73,20 +76,16 @@ github_username="CjayDoesCode"
 #   user input
 # ------------------------------------------------------------------------------
 
-read -rp $'\n'"Install osu!(lazer)? [Y/n]: " install_osu
-read -rp $'\n'"Keep chezmoi? [Y/n]: " keep_chezmoi
-read -rp $'\n'"Reboot after installation? [Y/n]: " reboot
+printf "\n Install osu!(lazer)? [Y/n]: " && read -r install_osu
+printf "\n Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
+printf "\n Reboot after installation? [Y/n]: " && read -r reboot
 
 # ------------------------------------------------------------------------------
 #   Installation
 # ------------------------------------------------------------------------------
 
 printf "\nInstalling packages...\n"
-sudo pacman --sync --noconfirm --needed \
-  "${pkgs[@]}" \
-  "${hyprland_pkgs[@]}" \
-  "${font_pkgs[@]}" \
-  "${theme_pkgs[@]}"
+sudo pacman -Syu --noconfirm --needed "${packages[@]}"
 
 printf "\nEnabling services...\n"
 systemctl --user enable \
@@ -97,31 +96,30 @@ systemctl --user enable \
 
 printf "\nConfiguring GTK...\n"
 for key in "${!gsettings_values[@]}"; do
-  gsettings set org.gnome.desktop.interface \
-    "${key}" \
-    "${gsettings_values["${key}"]}"
+  gsettings set org.gnome.desktop.interface "$key" "${gsettings_values["$key"]}"
 done
 
 printf "\nInstalling dotfiles...\n"
-chezmoi init --apply --force "${github_username}"
+chezmoi init --apply --force "$github_username"
 
-if [[ ! "${install_osu}" =~ ^[nN] ]]; then
+if [[ ! "$install_osu" =~ ^[nN] ]]; then
   printf "\nInstalling osu!(lazer)...\n"
-  mkdir --parents "${HOME}/.local/bin"
+  mkdir --parents "$HOME/.local/bin"
   curl \
-    --output "${HOME}/.local/bin/osu" \
+    --output "$HOME/.local/bin/osu" \
     --location https://github.com/ppy/osu/releases/latest/download/osu.AppImage
-  chmod +x "${HOME}/.local/bin/osu"
+  chmod +x "$HOME/.local/bin/osu"
 else
-  rm --force "${HOME}/.local/share/applications/osu.desktop"
-  rm --force "${HOME}/.local/share/icons/hicolor/128x128/apps/osu-logo.png"
+  rm --force "$HOME/.local/share/applications/osu.desktop"
+  rm --force "$HOME/.local/share/icons/hicolor/128x128/apps/osu-logo.png"
+  chezmoi forget --force "$HOME/.local"
 fi
 
 if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
   printf "\nRemoving chezmoi...\n"
   chezmoi purge --force
-  sudo pacman --remove --nosave --recursive --noconfirm chezmoi
+  sudo pacman -Rns --noconfirm chezmoi
 fi
 
 printf "\nInstallation completed.\n\n"
-[[ ! "${reboot}" =~ ^[nN]$ ]] && reboot
+[[ ! "${reboot}" =~ ^[nN]$ ]] && shutdown -r now

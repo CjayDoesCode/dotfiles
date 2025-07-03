@@ -1,24 +1,26 @@
-[[ $- != *i* ]] && return
-
-export EDITOR=helix
-export GIT_PS1_SHOWDIRTYSTATE=1
-export HISTCONTROL="erasedups:ignorespace"
-export PATH="${HOME}/.local/bin:${PATH}"
-export TERMINAL=kitty
-
-shopt -s autocd
-
-alias edit="helix"
-alias grep='grep --color=auto'
-alias ls='ls --color=auto'
-alias ll='ls -lah'
-alias la='ls -A'
-
-if [ -f /usr/share/git/completion/git-prompt.sh ]; then
-    source /usr/share/git/completion/git-prompt.sh
+if [[ ! "${-}" =~ i ]]; then
+  return
 fi
 
-MAGENTA="\[\e[35m\]"
-RESET="\[\e[0m\]"
+HISTCONTROL=ignoreboth
 
-export PS1="${MAGENTA}\u${RESET}@\h ${MAGENTA}\w${RESET}\$(__git_ps1 ' (%s)')> "
+shopt -s histappend
+
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+shopt -s checkwinsize
+
+source /usr/share/git/completion/git-prompt.sh
+
+magenta="\[\033[35m\]"
+reset="\[\033[0m\]"
+
+PS1="${magenta}\u${reset}@\h ${magenta}\w${reset}\$(__git_ps1 ' (%s)')> "
+
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
+
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"

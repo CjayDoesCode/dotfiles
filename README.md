@@ -50,9 +50,9 @@ chmod +x install.sh
 
 ## Installed Packages
 
-| Package Group   | Packages                                                                                                                                                                                       |
-| :-------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pkgs`          | `bottom` `chezmoi` `fastfetch` `firefox` `grim` `helix` `imagemagick` `kitty` `rofi-wayland` `slurp` `udiskie` `uwsm` `waybar` `wl-clipboard` `xdg-desktop-portal-gtk` `xdg-user-dirs`         |
-| `hyprland_pkgs` | `hyprland` `hyprpaper` `hyprpolkitagent` `xdg-desktop-portal-hyprland`                                                                                                                         |
-| `font_pkgs`     | `adobe-source-code-pro-fonts` `inter-font` `noto-fonts` `noto-fonts-cjk` `noto-fonts-emoji` `noto-fonts-extra` `ttf-nerd-fonts-symbols` `ttf-nerd-fonts-symbols-mono` `ttf-sourcecodepro-nerd` |
-| `theme_pkgs`    | `capitaine-cursors` `orchis-theme` `papirus-icon-theme`                                                                                                                                        |
+| Package Group       | Packages                                                                                                                                                                                       |
+| :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages`          | `bottom` `chezmoi` `fastfetch` `firefox` `grim` `helix` `imagemagick` `kitty` `rofi-wayland` `slurp` `udiskie` `uwsm` `waybar` `wl-clipboard` `xdg-desktop-portal-gtk` `xdg-user-dirs`         |
+| `hyprland_packages` | `hyprland` `hyprpaper` `hyprpolkitagent` `xdg-desktop-portal-hyprland`                                                                                                                         |
+| `font_packages`     | `adobe-source-code-pro-fonts` `inter-font` `noto-fonts` `noto-fonts-cjk` `noto-fonts-emoji` `noto-fonts-extra` `ttf-nerd-fonts-symbols` `ttf-nerd-fonts-symbols-mono` `ttf-sourcecodepro-nerd` |
+| `theme_packages`    | `capitaine-cursors` `orchis-theme` `papirus-icon-theme`                                                                                                                                        |

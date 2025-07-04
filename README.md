@@ -15,7 +15,7 @@ Dotfiles for a simple Arch Linux Hyprland setup.
 - **Status Bar:** `waybar`  
 - **Wallpaper Utility:** `hyprpaper`  
 - **Application Launcher:** `rofi-wayland`  
-- **Screenshotting:** `grim` `slurp` `wl-clipboard`  
+- **Screenshotting Utilities:** `grim` `slurp` `wl-clipboard`  
 
 **Appearance**  
 - **GTK Theme:** `orchis-theme`  

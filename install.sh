@@ -24,6 +24,7 @@ packages=(
   "helix"
   "imagemagick"
   "kitty"
+  "libnotify"
   "mako"
   "nm-connection-editor"
   "pavucontrol"
@@ -39,8 +40,10 @@ packages=(
 
 # hyprland packages
 packages+=(
+  "hypridle"
   "hyprland"
   "hyprpaper"
+  "hyprlock"
   "hyprpolkitagent"
   "xdg-desktop-portal-hyprland"
 )
@@ -61,7 +64,7 @@ packages+=(
 packages+=(
   "capitaine-cursors"
   "orchis-theme"
-  "papirus-icon-theme"
+  "tela-circle-icon-theme-standard"
 )
 
 declare -A gsettings_values=(
@@ -69,7 +72,7 @@ declare -A gsettings_values=(
   ["cursor-theme"]="capitaine-cursors-light"
   ["cursor-size"]="24"
   ["font-name"]="Inter 12"
-  ["icon-theme"]="Papirus-Dark"
+  ["icon-theme"]="Tela-circle-dark"
   ["gtk-theme"]="Orchis-Dark-Compact"
 )
 
@@ -92,8 +95,10 @@ sudo pacman -Syu --noconfirm --needed "${packages[@]}"
 
 printf "\nEnabling services...\n"
 systemctl --user enable \
+  hypridle.service \
   hyprpaper.service \
   hyprpolkitagent.service \
+  mako.service \
   waybar.service \
   xdg-user-dirs-update.service
 

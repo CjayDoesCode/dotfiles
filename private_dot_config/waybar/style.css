@@ -22,6 +22,15 @@
   background-color: @bg-color;
 }
 
+#custom-logo {
+  min-width: 32px;
+  padding-top: 1px;
+}
+
+#custom-logo:hover {
+  color: @dark-gray-color;
+}
+
 #workspaces > button > box {
   min-width: 32px;
 }
@@ -37,11 +46,15 @@
 
 #network {
   min-width: 32px;
-  margin-top: 1px;
+  padding-top: 1px;
 }
 
 #clock > widget > label {
   min-width: 64px;
+}
+
+.date {
+  padding: 0 8px;
 }
 
 #network.linked,
@@ -50,9 +63,21 @@
   color: @dark-gray-color;
 }
 
+#network:hover {
+  color: @dark-gray-color;
+}
+
 #pulseaudio > widget > label {
   min-width: 32px;
   padding-top: 1px;
+}
+
+#pulseaudio > widget > label:hover {
+  color: @dark-gray-color;
+}
+
+.volume {
+  padding: 0px 8px;
 }
 
 #battery > widget > label {
@@ -60,6 +85,15 @@
   padding-top: 1px;
 }
 
-.tooltip {
+.capacity {
   padding: 0px 8px;
+}
+
+#custom-bell {
+  min-width: 32px;
+  padding-top: 1px;
+}
+
+#custom-bell:hover {
+  color: @dark-gray-color;
 }

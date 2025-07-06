@@ -1,9 +1,22 @@
 {
     "layer": "top",
     "position": "top",
-    "modules-left": ["hyprland/workspaces"],
+    "modules-left": [
+        "custom/logo",
+        "hyprland/workspaces"
+    ],
     "modules-center": ["group/clock"],
-    "modules-right": ["network", "group/pulseaudio", "group/battery"],
+    "modules-right": [
+        "network",
+        "group/pulseaudio",
+        "group/battery",
+        "custom/bell"
+    ],
+    "custom/logo": {
+        "format": "󰣇",
+        "on-click": "rofi -show drun",
+        "tooltip": false
+    },
     "hyprland/workspaces": {
         "format": "",
         "persistent-only": true,
@@ -15,7 +28,7 @@
         "orientation": "horizontal",
         "modules": [
             "clock",
-            "clock#tooltip"
+            "clock#date"
         ],
         "drawer": {
             "transition-duration": 250,
@@ -26,19 +39,20 @@
         "format": "{:%R}",
         "tooltip": false
     },
-    "clock#tooltip": {
+    "clock#date": {
         "format": "{:%A, %B %d, %Y}",
         "tooltip": false
     },
     "network": {
         "format": "",
+        "on-click": "nm-connection-editor",
         "tooltip": false
     },
     "group/pulseaudio": {
         "orientation": "horizontal",
         "modules": [
             "pulseaudio",
-            "pulseaudio#tooltip"
+            "pulseaudio#volume"
         ],
         "drawer": {
             "transition-duration": 250,
@@ -50,9 +64,10 @@
         "format-muted": "",
         "format-icons": ["", "", ""],
         "scroll-step": 5,
+        "on-click": "pavucontrol",
         "tooltip": false
     },
-    "pulseaudio#tooltip": {
+    "pulseaudio#volume": {
         "format": "{volume}%",
         "tooltip": false
     },
@@ -60,7 +75,7 @@
         "orientation": "horizontal",
         "modules": [
             "battery",
-            "battery#tooltip"
+            "battery#capacity"
         ],
         "drawer": {
             "transition-duration": 250,
@@ -72,8 +87,21 @@
         "format-icons": ["", "", "", "", ""],
         "tooltip": false
     },
-    "battery#tooltip": {
+    "battery#capacity": {
         "format": "{capacity}%",
         "tooltip": false
-    }
+    },
+    "custom/bell": {
+        "exec": "makoctl mode | grep -q 'dnd'; printf '{\"alt\": %s}' $?",
+        "exec-on-event": false,
+        "return-type": "json",
+        "signal": 1,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "0": ""
+        },
+        "on-click": "makoctl mode -t dnd; pkill -SIGRTMIN+1 waybar",
+        "tooltip": false
+    },
 }

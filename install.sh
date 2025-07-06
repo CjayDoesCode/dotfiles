@@ -133,8 +133,18 @@ if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
 fi
 
 printf "\nConfigurig greetd...\n"
-printf "\n[initial_session]\nuser = %s\n" "${USER}" |
-  sudo tee -a /etc/greetd/config.toml >/dev/null
+cat << CONFIG | sudo tee /etc/greetd/config.toml > /dev/null
+[terminal]
+vt = 1
+
+[default_session]
+command = "agreety -c 'uwsm start hyprland.desktop'"
+user = "greeter"
+
+[initial_session]
+command = "uwsm start hyprland.desktop"
+user = ${USER}
+CONFIG
 
 printf "\nInstallation completed.\n\n"
 [[ ! "${reboot}" =~ ^[nN]$ ]] && shutdown -r now

@@ -2,9 +2,9 @@ configuration {
 	modes: "drun";	
 	drun-display-format: "{name}";
 	run-command: "uwsm app -- {cmd}";
-	icon-theme: "Papirus-Dark";
+	icon-theme: "Tela-circle-dark";
 	icon {
-		theme: "Papirus-Dark";
+		theme: "Tela-circle-dark";
 	}
 }
 

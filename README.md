@@ -15,11 +15,12 @@ Dotfiles for a simple Arch Linux Hyprland setup.
 - **Notification Daemon:** `mako`
 - **Status Bar:** `waybar`
 - **Wallpaper Utility:** `hyprpaper`
+- **Screen Lock:** `hyprlock`
 - **Application Launcher:** `rofi-wayland`
 
 **Appearance**
 - **GTK Theme:** `orchis-theme`
-- **Icon Theme:** `papirus-icon-theme`
+- **Icon Theme:** `tela-circle-icon-theme-standard`
 - **Cursor Theme:** `capitaine-cursors`
 
 **Extras**
@@ -50,9 +51,9 @@ chmod +x install.sh
 
 ## Installed Packages
 
-| Package Group       | Packages                                                                                                                                                                                                                            |
-| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `packages`          | `bottom` `chezmoi` `fastfetch` `firefox` `grim` `helix` `imagemagick` `kitty` `mako` `nm-connnection-editor` `pavucontrol` `rofi-wayland` `slurp` `udiskie` `uwsm` `waybar` `wl-clipboard` `xdg-desktop-portal-gtk` `xdg-user-dirs` |
-| `hyprland_packages` | `hyprland` `hyprpaper` `hyprpolkitagent` `xdg-desktop-portal-hyprland`                                                                                                                                                              |
-| `font_packages`     | `inter-font` `noto-fonts` `noto-fonts-cjk` `noto-fonts-emoji` `noto-fonts-extra` `ttf-nerd-fonts-symbols` `ttf-nerd-fonts-symbols-mono` `ttf-sourcecodepro-nerd`                                                                    |
-| `theme_packages`    | `capitaine-cursors` `orchis-theme` `papirus-icon-theme`                                                                                                                                                                             |
+| Package Group       | Packages                                                                                                                                                                                                                                        |
+| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages`          | `bottom` `chezmoi` `fastfetch` `firefox` `grim` `helix` `imagemagick` `kitty` `libnotify` `mako` `nm-connnection-editor` `pavucontrol` `rofi-wayland` `slurp` `udiskie` `uwsm` `waybar` `wl-clipboard` `xdg-desktop-portal-gtk` `xdg-user-dirs` |
+| `hyprland_packages` | `hypridle` `hyprland` `hyprpaper` `hyprlock` `hyprpolkitagent` `xdg-desktop-portal-hyprland`                                                                                                                                                    |
+| `font_packages`     | `inter-font` `noto-fonts` `noto-fonts-cjk` `noto-fonts-emoji` `noto-fonts-extra` `ttf-nerd-fonts-symbols` `ttf-nerd-fonts-symbols-mono` `ttf-sourcecodepro-nerd`                                                                                |
+| `theme_packages`    | `capitaine-cursors` `orchis-theme` `tela-circle-icon-theme-standard`                                                                                                                                                                            |

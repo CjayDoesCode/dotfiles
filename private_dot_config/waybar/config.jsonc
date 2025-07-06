@@ -5,7 +5,7 @@
         "custom/logo",
         "hyprland/workspaces"
     ],
-    "modules-center": ["group/clock"],
+    "modules-center": ["clock"],
     "modules-right": [
         "network",
         "group/pulseaudio",
@@ -24,23 +24,8 @@
             "*": 5
         }
     },
-    "group/clock": {
-        "orientation": "horizontal",
-        "modules": [
-            "clock",
-            "clock#date"
-        ],
-        "drawer": {
-            "transition-duration": 250,
-            "transition-left-to-right": false
-        }
-    },
     "clock": {
-        "format": "{:%R}",
-        "tooltip": false
-    },
-    "clock#date": {
-        "format": "{:%A, %B %d, %Y}",
+        "format": "{:%a %b %d  %R}",
         "tooltip": false
     },
     "network": {

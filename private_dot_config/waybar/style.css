@@ -49,14 +49,6 @@
   padding-top: 1px;
 }
 
-#clock > widget > label {
-  min-width: 64px;
-}
-
-.date {
-  padding: 0 8px;
-}
-
 #network.linked,
 #network.disabled,
 #network.disconnected {

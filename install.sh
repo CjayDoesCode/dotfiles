@@ -20,7 +20,6 @@ packages=(
   "chezmoi"
   "fastfetch"
   "firefox"
-  "greetd"
   "grim"
   "helix"
   "imagemagick"
@@ -99,7 +98,6 @@ systemctl --user enable \
   hypridle.service \
   hyprpaper.service \
   hyprpolkitagent.service \
-  greetd.service \
   mako.service \
   waybar.service \
   xdg-user-dirs-update.service
@@ -115,15 +113,19 @@ chezmoi init --apply --force "${github_username}"
 
 if [[ ! "${install_osu}" =~ ^[nN] ]]; then
   printf "\nInstalling osu!(lazer)...\n"
-  mkdir --parents "${HOME}/.local/bin"
+  target_directory="${HOME}/.local/bin"
+  url="https://github.com/ppy/osu/releases/latest/download/osu.AppImage"
+  mkdir --parents "${target_directory}"
   curl \
-    --output "${HOME}/.local/bin/osu" \
-    --location https://github.com/ppy/osu/releases/latest/download/osu.AppImage
-  chmod +x "${HOME}/.local/bin/osu"
+    --output "${target_directory}/osu" \
+    --location "${url}"
+  chmod +x "${target_directory}/osu"
 else
-  rm --force "${HOME}/.local/share/applications/osu.desktop"
-  rm --force "${HOME}/.local/share/icons/hicolor/128x128/apps/osu-logo.png"
-  chezmoi forget --force "${HOME}/.local"
+  target_directory="${HOME}/.local/share"
+  rm --force "${target_directory}/applications/osu.desktop"
+  rm --force "${target_directory}/icons/hicolor/128x128/apps/osu-logo.png"
+  chezmoi forget --force "${target_directory}/applications"
+  chezmoi forget --force "${target_directory}/icons"
 fi
 
 if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
@@ -132,18 +134,21 @@ if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
   sudo pacman -Rns --noconfirm chezmoi
 fi
 
-printf "\nConfigurig greetd...\n"
-cat << CONFIG | sudo tee /etc/greetd/config.toml > /dev/null
-[terminal]
-vt = 1
+printf "\nConfiguring agetty...\n"
+target_directory="/etc/systemd/system/getty@tty1.service.d"
+command="-/usr/bin/agetty \
+  --autologin ${USER} \
+  --noissue \
+  --noclear \
+  --skip-login \
+  --nonewline \
+  %I \${TERM}"
 
-[default_session]
-command = "agreety -c 'uwsm start hyprland.desktop'"
-user = "greeter"
-
-[initial_session]
-command = "uwsm start hyprland.desktop"
-user = ${USER}
+sudo mkdir --parents "${target_directory}"
+cat <<CONFIG | sudo tee "${target_directory}/autologin.conf" >/dev/null
+[Service]
+ExecStart=
+ExecStart=${command}
 CONFIG
 
 printf "\nInstallation completed.\n\n"

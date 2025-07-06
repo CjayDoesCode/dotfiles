@@ -20,6 +20,7 @@ packages=(
   "chezmoi"
   "fastfetch"
   "firefox"
+  "greetd"
   "grim"
   "helix"
   "imagemagick"
@@ -98,6 +99,7 @@ systemctl --user enable \
   hypridle.service \
   hyprpaper.service \
   hyprpolkitagent.service \
+  greetd.service \
   mako.service \
   waybar.service \
   xdg-user-dirs-update.service
@@ -129,6 +131,10 @@ if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
   chezmoi purge --force
   sudo pacman -Rns --noconfirm chezmoi
 fi
+
+printf "\nConfigurig greetd...\n"
+printf "\n[initial_session]\nuser = %s\n" "${USER}" |
+  sudo tee -a /etc/greetd/config.toml >/dev/null
 
 printf "\nInstallation completed.\n\n"
 [[ ! "${reboot}" =~ ^[nN]$ ]] && shutdown -r now

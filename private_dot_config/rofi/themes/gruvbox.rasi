@@ -42,11 +42,22 @@ entry {
 	cursor-width: 1px;
 }
 
+/* dynamic size causes issues with animation */
 listview {
 	spacing: 4px;
+	fixed-height: true;
+	dynamic: false;
+	scrollbar: true;
+	scrollbar-width: 2px;
 	cycle: false;
 	lines: 5;
-	children: [ element ];
+	children: [ scrollbar, element ];
+}
+
+scrollbar {
+	handle-width: 2px;
+	handle-color: var(fg-color);
+	handle-rounded-corners: true;
 }
 
 element {

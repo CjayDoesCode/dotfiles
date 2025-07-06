@@ -4,30 +4,40 @@
 
 Dotfiles for a simple Arch Linux Hyprland setup.
 
-**System**
-- **Shell:** `bash`
-- **Terminal Emulator:** `kitty`
-- **System Information:** `fastfetch`
-- **System Monitor:** `bottom`
-- **Browser:** `firefox`
+**Applications**
 
-**Utilities**
-- **Notification Daemon:** `mako`
+- **Web Browser:** `firefox`
+- **Terminal Emulator:** `kitty`
+- **PulseAudio Volume Control:** `pavucontrol`
+- **NetworkManager Connection Editor:** `nm-connection-editor`
+
+**User Interface**
+
+- **Application Launcher:** `rofi-wayland`
+- **Screen Lock:** `hyprlock`
 - **Status Bar:** `waybar`
 - **Wallpaper Utility:** `hyprpaper`
-- **Screen Lock:** `hyprlock`
-- **Application Launcher:** `rofi-wayland`
+
+**Utilities**
+
+- **Idle Management Daemon:** `hypridle`
+- **Notification Daemon:** `mako`
+- **System Information:** `fastfetch`
+- **System Monitor:** `bottom`
 
 **Appearance**
+
+- **Cursor Theme:** `capitaine-cursors`
 - **GTK Theme:** `orchis-theme`
 - **Icon Theme:** `tela-circle-icon-theme-standard`
-- **Cursor Theme:** `capitaine-cursors`
 
 **Extras**
-- **Wallpaper:** From the [osu! Midnight Moment Art Contest](https://osu.ppy.sh/community/contests/226) by [tehfire](https://osu.ppy.sh/users/7082924)
+
 - **Fastfetch Logo:** From the [osu! Spring 2024 Fanart Contest](https://osu.ppy.sh/community/contests/205) by [roadcrow__](https://osu.ppy.sh/users/11752694)
+- **Wallpaper:** From the [osu! Midnight Moment Art Contest](https://osu.ppy.sh/community/contests/226) by [tehfire](https://osu.ppy.sh/users/7082924)
 
 **Optional**
+
 - **Game:** osu!(lazer)
 
 ## Installation
@@ -53,7 +63,7 @@ chmod +x install.sh
 
 | Package Group       | Packages                                                                                                                                                                                                                                        |
 | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `packages`          | `bottom` `chezmoi` `fastfetch` `firefox` `grim` `helix` `imagemagick` `kitty` `libnotify` `mako` `nm-connnection-editor` `pavucontrol` `rofi-wayland` `slurp` `udiskie` `uwsm` `waybar` `wl-clipboard` `xdg-desktop-portal-gtk` `xdg-user-dirs` |
+| `packages`          | `bottom` `chezmoi` `fastfetch` `firefox` `grim` `helix` `imagemagick` `kitty` `libnotify` `mako` `nm-connection-editor` `pavucontrol` `rofi-wayland` `slurp` `udiskie` `uwsm` `waybar` `wl-clipboard` `xdg-desktop-portal-gtk` `xdg-user-dirs`  |
 | `hyprland_packages` | `hypridle` `hyprland` `hyprpaper` `hyprlock` `hyprpolkitagent` `xdg-desktop-portal-hyprland`                                                                                                                                                    |
 | `font_packages`     | `inter-font` `noto-fonts` `noto-fonts-cjk` `noto-fonts-emoji` `noto-fonts-extra` `ttf-nerd-fonts-symbols` `ttf-nerd-fonts-symbols-mono` `ttf-sourcecodepro-nerd`                                                                                |
 | `theme_packages`    | `capitaine-cursors` `orchis-theme` `tela-circle-icon-theme-standard`                                                                                                                                                                            |

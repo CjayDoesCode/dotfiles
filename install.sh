@@ -82,9 +82,9 @@ github_username="CjayDoesCode"
 #   user input
 # ------------------------------------------------------------------------------
 
-printf "\n Install osu!(lazer)? [Y/n]: " && read -r install_osu
-printf "\n Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
-printf "\n Reboot after installation? [Y/n]: " && read -r reboot
+printf "\nInstall osu!(lazer)? [Y/n]: " && read -r install_osu
+printf "\nKeep chezmoi? [Y/n]: " && read -r keep_chezmoi
+printf "\nReboot after installation? [Y/n]: " && read -r reboot
 
 # ------------------------------------------------------------------------------
 #   Installation

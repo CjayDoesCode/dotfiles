@@ -16,6 +16,8 @@ packages=(
   "chezmoi"
   "fastfetch"
   "firefox"
+  "greetd"
+  "greetd-tuigreet"
   "grim"
   "helix"
   "imagemagick"
@@ -74,15 +76,6 @@ declare -A gsettings_values=(
   ["gtk-theme"]="Orchis-Dark-Compact"
 )
 
-services=(
-  "hypridle"
-  "hyprpaper"
-  "hyprpolkitagent"
-  "mako"
-  "waybar"
-  "xdg-user-dirs-update"
-)
-
 # ------------------------------------------------------------------------------
 #   user input
 # ------------------------------------------------------------------------------
@@ -116,6 +109,19 @@ else
   chezmoi forget --force "${target_directory}/icons"
 fi
 
+printf "\nConfiguring greetd...\n"
+cat <<CONFIG | sudo tee /etc/greetd/config.toml >/dev/null
+[terminal]
+vt = 1
+
+[default_session]
+command = "tuigreet --cmd \"sh -c 'exec -l bash'\""
+
+[initial_session]
+command = "sh -c 'exec -l bash'"
+user = "cjay"
+CONFIG
+
 printf "\nConfiguring GTK...\n"
 for key in "${!gsettings_values[@]}"; do
   gsettings set org.gnome.desktop.interface \
@@ -123,7 +129,14 @@ for key in "${!gsettings_values[@]}"; do
 done
 
 printf "\nEnabling services...\n"
-systemctl --user enable "${services[@]}"
+sudo systemctl enable greetd.service
+systemctl --user enable \
+  hypridle.service \
+  hyprpaper.service \
+  hyprpolkitagent.service \
+  mako.service \
+  waybar.service \
+  xdg-user-dirs-update.service
 
 if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
   printf "\nRemoving chezmoi...\n"

@@ -1,3 +1,5 @@
+export PATH="${PATH}:${HOME}/.local/bin"
+
 if [[ -f "${HOME}/.bashrc" ]]; then
   source "${HOME}/.bashrc"
 fi
@@ -5,5 +7,3 @@ fi
 if uwsm check may-start; then
   exec uwsm start hyprland-uwsm.desktop
 fi
-
-export PATH="${PATH}:${HOME}/.local/bin"

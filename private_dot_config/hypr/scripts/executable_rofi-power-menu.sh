@@ -8,16 +8,16 @@ declare -A options=(
   ["Shutdown"]="system-shutdown"
 )
 
-function print_options() {
+print_options() {
   for key in "${!options[@]}"; do
     printf "%s\\0icon\\x1f%s\n" "${key}" "${options["${key}"]}"
   done
 }
 
 case "$(print_options | rofi -dmenu -i)" in
-Lock) loginctl lock-session;;
-Sleep) systemctl suspend;;
-Hibernate) systemctl hibernate;;
-Reboot) systemctl reboot;;
-Shutdown) systemctl poweroff;;
+Lock) loginctl lock-session ;;
+Sleep) systemctl suspend ;;
+Hibernate) systemctl hibernate ;;
+Reboot) systemctl reboot ;;
+Shutdown) systemctl poweroff ;;
 esac

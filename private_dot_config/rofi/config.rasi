@@ -1,11 +1,11 @@
 configuration {
-	modes: "drun";	
-	drun-display-format: "{name}";
-	run-command: "uwsm app -- {cmd}";
-	icon-theme: "Tela-circle-dark";
-	icon {
-		theme: "Tela-circle-dark";
-	}
+  modes: "drun";
+  drun-display-format: "{name}";
+  run-command: "uwsm app -- {cmd}";
+  icon-theme: "Tela-circle-dark";
+  icon {
+    theme: "Tela-circle-dark";
+  }
 }
 
 @theme "gruvbox"

@@ -1,81 +1,81 @@
 * {
-	bg-color: rgba(40, 40, 40, 0.9);
-	fg-color: rgb(235, 219, 178);
-	dark-gray-color: rgb(146, 131, 116);
-	spacing: 0;
-	padding: 0;
-	margin: 0;
-	border: 0;
-	border-radius: 0;
-	background-color: transparent;
-	font: "Inter 12";
-	text-color: var(fg-color);
+  bg-color: rgba(40, 40, 40, 0.9);
+  fg-color: rgb(235, 219, 178);
+  dark-gray-color: rgb(146, 131, 116);
+  spacing: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  font: "Inter 12";
+  text-color: var(fg-color);
 }
 
 window {
-	spacing: 16px;
-	padding: 16px;
-	border-radius: 8px;
-	background-color: var(bg-color);
-	location: north;
-	anchor: north;
-	width: 512px;
-	y-offset: 8px;
-	children: [ inputbar, listview ];
+  spacing: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: var(bg-color);
+  location: north;
+  anchor: north;
+  width: 512px;
+  y-offset: 8px;
+  children: [ inputbar, listview ];
 }
 
 inputbar {
-	spacing: 8px;
-	children: [ textbox-prompt, entry ];
+  spacing: 8px;
+  children: [ textbox-prompt, entry ];
 }
 
 textbox-prompt {
-	font: "Symbols Nerd Font Mono 12";
-	content: "";
-	vertical-align: 0.5;
-	horizontal-align: 0.5;
-	width: 24px;
-	expand: false;
+  font: "Symbols Nerd Font Mono 12";
+  content: "";
+  vertical-align: 0.5;
+  horizontal-align: 0.5;
+  width: 24px;
+  expand: false;
 }
 
 entry {
-	cursor-width: 1px;
+  cursor-width: 1px;
 }
 
 /* dynamic size causes issues with animation */
 listview {
-	spacing: 4px;
-	fixed-height: true;
-	dynamic: false;
-	scrollbar: true;
-	scrollbar-width: 2px;
-	cycle: false;
-	lines: 5;
-	children: [ scrollbar, element ];
+  spacing: 4px;
+  fixed-height: true;
+  dynamic: false;
+  scrollbar: true;
+  scrollbar-width: 2px;
+  cycle: false;
+  lines: 5;
+  children: [ scrollbar, element ];
 }
 
 scrollbar {
-	handle-width: 2px;
-	handle-color: var(fg-color);
-	handle-rounded-corners: true;
+  handle-width: 2px;
+  handle-color: var(fg-color);
+  handle-rounded-corners: true;
 }
 
 element {
-	spacing: 8px;
-	text-color: var(dark-gray-color);
-	children: [ element-icon, element-text ];
+  spacing: 8px;
+  text-color: var(dark-gray-color);
+  children: [ element-icon, element-text ];
 }
 
 element selected {
-	text-color: var(fg-color);
+  text-color: var(fg-color);
 }
 
 element-icon {
-	size: 24px;
+  size: 24px;
 }
 
 element-text {
-	vertical-align: 0.5;
-	text-color: inherit;
-	highlight: none;
+  vertical-align: 0.5;
+  text-color: inherit;
+  highlight: none;
 }

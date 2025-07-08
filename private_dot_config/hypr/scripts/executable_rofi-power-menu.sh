@@ -15,7 +15,7 @@ print_options() {
 }
 
 case "$(print_options | rofi -dmenu -i)" in
-Lock) loginctl lock-session ;;
+Lock) uwsm app -- hyprlock ;;
 Sleep) systemctl suspend ;;
 Hibernate) systemctl hibernate ;;
 Reboot) systemctl reboot ;;

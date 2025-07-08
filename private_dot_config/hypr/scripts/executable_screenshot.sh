@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-output="${HOME}/Pictures/Screenshot_$(date +%Y%m%d_%H%M%S).png"
+timestamp="$(date +%Y%m%d_%H%M%S)"
+output="${HOME}/Pictures/Screenshot_${timestamp}.png"
 
-if grim -g "$(slurp)" "${output}"; then
+if region="$(slurp)" && grim -g "${region}" "${output}"; then
   wl-copy <"${output}"
 fi

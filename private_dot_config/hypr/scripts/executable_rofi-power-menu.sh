@@ -15,7 +15,7 @@ function print_options() {
 }
 
 case "$(print_options | rofi -dmenu -i)" in
-Lock) hyprlock;;
+Lock) loginctl lock-session;;
 Sleep) systemctl suspend;;
 Hibernate) systemctl hibernate;;
 Reboot) systemctl reboot;;

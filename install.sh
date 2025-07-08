@@ -2,12 +2,8 @@
 
 set -euo pipefail
 
-# ------------------------------------------------------------------------------
-#   checks
-# ------------------------------------------------------------------------------
-
 if [[ "${EUID}" -eq 0 ]]; then
-  printf "\nThis script must not be run as root.\n\n"
+  printf "\nThis script must not be run as root.\n\n" >&2
   exit 1
 fi
 
@@ -67,6 +63,8 @@ packages+=(
   "tela-circle-icon-theme-standard"
 )
 
+github_username="CjayDoesCode"
+
 declare -A gsettings_values=(
   ["color-scheme"]="prefer-dark"
   ["cursor-theme"]="capitaine-cursors-light"
@@ -76,7 +74,14 @@ declare -A gsettings_values=(
   ["gtk-theme"]="Orchis-Dark-Compact"
 )
 
-github_username="CjayDoesCode"
+services=(
+  "hypridle"
+  "hyprpaper"
+  "hyprpolkitagent"
+  "mako"
+  "waybar"
+  "xdg-user-dirs-update"
+)
 
 # ------------------------------------------------------------------------------
 #   user input
@@ -93,21 +98,6 @@ printf "\nReboot after installation? [Y/n]: " && read -r reboot
 printf "\nInstalling packages...\n"
 sudo pacman -Syu --noconfirm --needed "${packages[@]}"
 
-printf "\nEnabling services...\n"
-systemctl --user enable \
-  hypridle.service \
-  hyprpaper.service \
-  hyprpolkitagent.service \
-  mako.service \
-  waybar.service \
-  xdg-user-dirs-update.service
-
-printf "\nConfiguring GTK...\n"
-for key in "${!gsettings_values[@]}"; do
-  gsettings set org.gnome.desktop.interface \
-    "${key}" "${gsettings_values["${key}"]}"
-done
-
 printf "\nInstalling dotfiles...\n"
 chezmoi init --apply --force "${github_username}"
 
@@ -116,9 +106,7 @@ if [[ ! "${install_osu}" =~ ^[nN] ]]; then
   target_directory="${HOME}/.local/bin"
   url="https://github.com/ppy/osu/releases/latest/download/osu.AppImage"
   mkdir --parents "${target_directory}"
-  curl \
-    --output "${target_directory}/osu" \
-    --location "${url}"
+  curl --output "${target_directory}/osu" --location "${url}"
   chmod +x "${target_directory}/osu"
 else
   target_directory="${HOME}/.local/share"
@@ -128,28 +116,24 @@ else
   chezmoi forget --force "${target_directory}/icons"
 fi
 
+printf "\nConfiguring GTK...\n"
+for key in "${!gsettings_values[@]}"; do
+  gsettings set org.gnome.desktop.interface \
+    "${key}" "${gsettings_values[${key}]}"
+done
+
+printf "\nEnabling services...\n"
+systemctl --user enable "${services[@]}"
+
 if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
   printf "\nRemoving chezmoi...\n"
   chezmoi purge --force
   sudo pacman -Rns --noconfirm chezmoi
 fi
 
-printf "\nConfiguring agetty...\n"
-target_directory="/etc/systemd/system/getty@tty1.service.d"
-command="-/usr/bin/agetty \
-  --autologin ${USER} \
-  --noissue \
-  --noclear \
-  --skip-login \
-  --nonewline \
-  %I \${TERM}"
-
-sudo mkdir --parents "${target_directory}"
-cat <<CONFIG | sudo tee "${target_directory}/autologin.conf" >/dev/null
-[Service]
-ExecStart=
-ExecStart=${command}
-CONFIG
+# ==============================================================================
+#   post-installation
+# ==============================================================================
 
 printf "\nInstallation completed.\n\n"
-[[ ! "${reboot}" =~ ^[nN]$ ]] && shutdown -r now
+[[ ! "${reboot}" =~ ^[nN]$ ]] && systemctl reboot

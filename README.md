@@ -1,5 +1,3 @@
-![](preview.png)
-
 # Dotfiles
 
 Dotfiles for a simple Arch Linux Hyprland setup.
@@ -67,3 +65,8 @@ chmod +x install.sh
 | `hyprland_packages` | `hypridle` `hyprland` `hyprpaper` `hyprlock` `hyprpolkitagent` `xdg-desktop-portal-hyprland`                                                                                                                                                                              |
 | `font_packages`     | `inter-font` `noto-fonts` `noto-fonts-cjk` `noto-fonts-emoji` `noto-fonts-extra` `ttf-nerd-fonts-symbols` `ttf-nerd-fonts-symbols-mono` `ttf-sourcecodepro-nerd`                                                                                                          |
 | `theme_packages`    | `capitaine-cursors` `orchis-theme` `tela-circle-icon-theme-standard`                                                                                                                                                                                                      |
+
+## Screenshots
+
+![](screenshot_desktop.png)
+![](screenshot_lockscreen.png)

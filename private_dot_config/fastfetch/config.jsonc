@@ -3,7 +3,8 @@
     "logo": {
         "type": "kitty",
         "source": "~/.local/share/fastfetch/logos/roadcrow__.png",
-        "height": 12,
+        "width": 56,
+        "height": 15,
         "padding": {
             "right": 1
         }
@@ -13,25 +14,18 @@
         "brightColor": false
     },
     "modules": [
-        {
-            "type": "title",
-            "color": {
-                "host": "default"
-            }  
-        },
+        "title",
         "separator",
         "os",
-        {
-            "type": "kernel",
-            "format": "{release}"
-        },
+        "kernel",
         "packages",
-        "break",
-        "de",
+        "shell",
         "wm",
-        "wmtheme",
+        "break",
         "theme",
         "icons",
+        "font",
+        "cursor",
         "break",
         "colors"
     ]

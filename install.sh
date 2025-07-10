@@ -66,6 +66,7 @@ packages+=(
 )
 
 github_username="CjayDoesCode"
+osu_url="https://github.com/ppy/osu/releases/latest/download/osu.AppImage"
 
 declare -A gsettings_values=(
   ["color-scheme"]="prefer-dark"
@@ -80,9 +81,10 @@ declare -A gsettings_values=(
 #   user input
 # ------------------------------------------------------------------------------
 
-printf "\nInstall osu!(lazer)? [Y/n]: " && read -r install_osu
-printf "\nKeep chezmoi? [Y/n]: " && read -r keep_chezmoi
-printf "\nReboot after installation? [Y/n]: " && read -r reboot
+printf "\n"
+printf "Install osu!(lazer)? [Y/n]: " && read -r install_osu
+printf "Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
+printf "Reboot after installation? [Y/n]: " && read -r reboot
 
 # ------------------------------------------------------------------------------
 #   Installation
@@ -91,22 +93,11 @@ printf "\nReboot after installation? [Y/n]: " && read -r reboot
 printf "\nInstalling packages...\n"
 sudo pacman -Syu --noconfirm --needed "${packages[@]}"
 
-printf "\nInstalling dotfiles...\n"
-chezmoi init --apply --force "${github_username}"
-
 if [[ ! "${install_osu}" =~ ^[nN] ]]; then
   printf "\nInstalling osu!(lazer)...\n"
-  target_directory="${HOME}/.local/bin"
-  url="https://github.com/ppy/osu/releases/latest/download/osu.AppImage"
-  mkdir --parents "${target_directory}"
-  curl --output "${target_directory}/osu" --location "${url}"
-  chmod +x "${target_directory}/osu"
-else
-  target_directory="${HOME}/.local/share"
-  rm --force "${target_directory}/applications/osu.desktop"
-  rm --force "${target_directory}/icons/hicolor/128x128/apps/osu-logo.png"
-  chezmoi forget --force "${target_directory}/applications"
-  chezmoi forget --force "${target_directory}/icons"
+  mkdir --parents "${HOME}/.local/bin"
+  curl --output "${HOME}/.local/bin/osu" --location "${osu_url}"
+  chmod +x "${HOME}/.local/bin/osu"
 fi
 
 printf "\nConfiguring greetd...\n"
@@ -115,11 +106,11 @@ cat <<CONFIG | sudo tee /etc/greetd/config.toml >/dev/null
 vt = 1
 
 [default_session]
-command = "tuigreet --cmd \"sh -c 'exec -l bash'\""
+command = "tuigreet --cmd \"sh -c 'exec -l ${SHELL}'\""
 
 [initial_session]
-command = "sh -c 'exec -l bash'"
-user = "cjay"
+command = "sh -c 'exec -l ${SHELL}'"
+user = "${USER}"
 CONFIG
 
 printf "\nConfiguring GTK...\n"
@@ -138,15 +129,24 @@ systemctl --user enable \
   waybar.service \
   xdg-user-dirs-update.service
 
+printf "\nApplying dotfiles...\n"
+chezmoi init --force "${github_username}"
+if [[ "${install_osu}" =~ ^[nN]$ ]]; then
+  chezmoi forget --force \
+    "${HOME}/.local/share/applications" \
+    "${HOME}/.local/share/icons"
+fi
+chezmoi apply --force
+
 if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
   printf "\nRemoving chezmoi...\n"
   chezmoi purge --force
   sudo pacman -Rns --noconfirm chezmoi
 fi
 
-# ==============================================================================
+# ------------------------------------------------------------------------------
 #   post-installation
-# ==============================================================================
+# ------------------------------------------------------------------------------
 
 printf "\nInstallation completed.\n\n"
 [[ ! "${reboot}" =~ ^[nN]$ ]] && systemctl reboot

@@ -106,10 +106,10 @@ cat <<CONFIG | sudo tee /etc/greetd/config.toml >/dev/null
 vt = 1
 
 [default_session]
-command = "tuigreet --cmd \"sh -c 'exec -l ${SHELL}'\""
+command = "tuigreet --cmd \\"sh -c 'exec -l \${SHELL}'\\""
 
 [initial_session]
-command = "sh -c 'exec -l ${SHELL}'"
+command = "sh -c 'exec -l \${SHELL}'"
 user = "${USER}"
 CONFIG
 

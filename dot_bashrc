@@ -3,26 +3,27 @@ if [[ ! "$-" =~ i ]]; then
 fi
 
 HISTCONTROL=ignoreboth
-
-shopt -s histappend
-
-HISTSIZE=1000
 HISTFILESIZE=2000
+HISTSIZE=1000
 
 shopt -s checkwinsize
+shopt -s histappend
 
-source /usr/share/git/completion/git-prompt.sh
+alias grep="grep --color=auto"
+alias ls="ls --color=auto"
+
+alias la="ls --almost-all"
+alias ll="ls --almost-all --human-readable -l"
+
+alias cp="cp --interactive"
+alias mv="mv --interactive"
+alias rm="rm --interactive=once"
+
+alias hx="helix"
 
 magenta="\[\033[35m\]"
 reset="\[\033[0m\]"
 
+source /usr/share/git/completion/git-prompt.sh
+
 PS1="${magenta}\u${reset}@\h ${magenta}\w${reset}\$(__git_ps1 ' (%s)')> "
-
-alias ls="ls --color=auto"
-alias grep="grep --color=auto"
-
-alias ll="ls -alF"
-alias la="ls -A"
-alias l="ls -CF"
-
-alias hx="helix"

@@ -86,7 +86,7 @@ declare -A gsettings_values=(
   ["gtk-theme"]="Orchis-Dark-Compact"
 )
 
-services=("greetd.service")
+greetd_service="greetd.service"
 user_services=(
   "hypridle.service"
   "hyprpaper.service"
@@ -164,7 +164,7 @@ for key in "${!gsettings_values[@]}"; do
 done
 
 printf "\nEnabling services...\n"
-sudo systemctl enable "${services[@]}"
+sudo systemctl enable "${greetd_service}"
 systemctl --user enable "${user_services[@]}"
 
 printf "\nApplying dotfiles...\n"

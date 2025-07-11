@@ -84,6 +84,16 @@ declare -A gsettings_values=(
   ["gtk-theme"]="Orchis-Dark-Compact"
 )
 
+services=("greetd.service")
+user_services=(
+  "hypridle.service"
+  "hyprpaper.service"
+  "hyprpolkitagent.service"
+  "mako.service"
+  "waybar.service"
+  "xdg-user-dirs-update.service"
+)
+
 github_username="CjayDoesCode"
 
 # ------------------------------------------------------------------------------
@@ -135,14 +145,8 @@ for key in "${!gsettings_values[@]}"; do
 done
 
 printf "\nEnabling services...\n"
-sudo systemctl enable greetd.service
-systemctl --user enable \
-  hypridle.service \
-  hyprpaper.service \
-  hyprpolkitagent.service \
-  mako.service \
-  waybar.service \
-  xdg-user-dirs-update.service
+sudo systemctl enable "${services[@]}"
+systemctl --user enable "${user_services[@]}"
 
 printf "\nApplying dotfiles...\n"
 chezmoi init --force "${github_username}"

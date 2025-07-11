@@ -11,7 +11,7 @@ fi
 #   variables
 # ------------------------------------------------------------------------------
 
-packages=(
+base_packages=(
   "bottom"
   "chezmoi"
   "fastfetch"
@@ -36,8 +36,7 @@ packages=(
   "xdg-user-dirs"
 )
 
-# hyprland packages
-packages+=(
+hyprland_packages=(
   "hypridle"
   "hyprland"
   "hyprpaper"
@@ -46,8 +45,7 @@ packages+=(
   "xdg-desktop-portal-hyprland"
 )
 
-# font packages
-packages+=(
+font_packages=(
   "inter-font"
   "noto-fonts"
   "noto-fonts-cjk"
@@ -58,15 +56,20 @@ packages+=(
   "ttf-sourcecodepro-nerd"
 )
 
-# theme packages
-packages+=(
+theme_packages=(
   "capitaine-cursors"
   "orchis-theme"
   "tela-circle-icon-theme-standard"
 )
 
-github_username="CjayDoesCode"
-osu_url="https://github.com/ppy/osu/releases/latest/download/osu.AppImage"
+# order is important
+osu_packages=(
+  "osu-mime"      # depency of osu-handler and osu-lazer-bin
+  "osu-handler"   # optional dependency of osu-mime
+  "osu-lazer-bin" # depends on osu-mime
+)
+
+build_directory="$(mktemp -d)"
 
 declare -A gsettings_values=(
   ["color-scheme"]="prefer-dark"
@@ -76,6 +79,8 @@ declare -A gsettings_values=(
   ["icon-theme"]="Tela-circle-dark"
   ["gtk-theme"]="Orchis-Dark-Compact"
 )
+
+github_username="CjayDoesCode"
 
 # ------------------------------------------------------------------------------
 #   user input
@@ -91,13 +96,20 @@ printf "Reboot after installation? [Y/n]: " && read -r reboot
 # ------------------------------------------------------------------------------
 
 printf "\nInstalling packages...\n"
-sudo pacman -Syu --noconfirm --needed "${packages[@]}"
+sudo pacman -Syu --noconfirm --needed \
+  "${base_packages[@]}" \
+  "${hyprland_packages[@]}" \
+  "${font_packages[@]}" \
+  "${theme_packages[@]}"
 
-if [[ ! "${install_osu}" =~ ^[nN] ]]; then
-  printf "\nInstalling osu!(lazer)...\n"
-  mkdir --parents "${HOME}/.local/bin"
-  curl --output "${HOME}/.local/bin/osu" --location "${osu_url}"
-  chmod +x "${HOME}/.local/bin/osu"
+if [[ ! "${install_osu}" =~ ^[nN]$ ]]; then
+  for pkg in "${osu_packages[@]}"; do
+    git clone "https://aur.archlinux.org/${pkg}.git" "${build_directory}/${pkg}"
+    (
+      cd "${build_directory}/${pkg}"
+      makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
+    )
+  done
 fi
 
 printf "\nConfiguring greetd...\n"

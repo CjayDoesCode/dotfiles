@@ -20,7 +20,7 @@ fi
 #   variables
 # ------------------------------------------------------------------------------
 
-base_packages=(
+declare -ar base_packages=(
   "bottom"
   "chezmoi"
   "fastfetch"
@@ -45,7 +45,7 @@ base_packages=(
   "xdg-user-dirs"
 )
 
-hyprland_packages=(
+declare -ar hyprland_packages=(
   "hypridle"
   "hyprland"
   "hyprpaper"
@@ -54,7 +54,7 @@ hyprland_packages=(
   "xdg-desktop-portal-hyprland"
 )
 
-font_packages=(
+declare -ar font_packages=(
   "inter-font"
   "noto-fonts"
   "noto-fonts-cjk"
@@ -65,28 +65,29 @@ font_packages=(
   "ttf-sourcecodepro-nerd"
 )
 
-theme_packages=(
+declare -ar theme_packages=(
   "capitaine-cursors"
   "orchis-theme"
   "tela-circle-icon-theme-standard"
 )
 
 # order is important
-osu_packages=(
+declare -ar osu_packages=(
   "osu-mime"      # depency of osu-handler and osu-lazer-bin
   "osu-handler"   # optional dependency of osu-mime
   "osu-lazer-bin" # depends on osu-mime
 )
 
-otd_package="opentabletdriver"
+readonly otd_package="opentabletdriver"
 
 build_directory="$(mktemp --directory)"
+readonly build_directory
 cleanup() {
   rm --force --recursive "${build_directory}"
 }
 trap cleanup EXIT
 
-declare -A gsettings_values=(
+declare -Ar gsettings_values=(
   ["color-scheme"]="prefer-dark"
   ["cursor-theme"]="capitaine-cursors-light"
   ["cursor-size"]="24"
@@ -95,8 +96,8 @@ declare -A gsettings_values=(
   ["gtk-theme"]="Orchis-Dark-Compact"
 )
 
-greetd_service="greetd.service"
-user_services=(
+readonly greetd_service="greetd.service"
+declare -ar user_services=(
   "hypridle.service"
   "hyprpaper.service"
   "hyprpolkitagent.service"
@@ -105,7 +106,7 @@ user_services=(
   "xdg-user-dirs-update.service"
 )
 
-github_username="CjayDoesCode"
+readonly github_username="CjayDoesCode"
 
 # ------------------------------------------------------------------------------
 #   user input
@@ -191,4 +192,4 @@ fi
 #   post-installation
 # ------------------------------------------------------------------------------
 
-printf "\nInstallation completed.\n\n"
+printf "\nInstallation completed. Exiting...\n\n"

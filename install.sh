@@ -2,6 +2,15 @@
 
 set -euo pipefail
 
+# ------------------------------------------------------------------------------
+#   checks
+# ------------------------------------------------------------------------------
+
+if ! grep --quiet "^ID=arch$" /etc/os-release; then
+  printf "\nThis script only supports Arch Linux.\n\n" >&2
+  exit 1
+fi
+ 
 if [[ "${EUID}" -eq 0 ]]; then
   printf "\nThis script must not be run as root.\n\n" >&2
   exit 1

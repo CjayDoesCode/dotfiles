@@ -78,8 +78,6 @@ osu_packages=(
   "osu-lazer-bin" # depends on osu-mime
 )
 
-otd_package="opentabletdriver"
-
 build_directory="$(mktemp --directory)"
 
 declare -A gsettings_values=(
@@ -108,11 +106,6 @@ github_username="CjayDoesCode"
 # ------------------------------------------------------------------------------
 
 printf "\nInstall osu!(lazer)? [Y/n]: " && read -r install_osu
-
-if [[ "${install_osu}" =~ ^[nN]$ ]]; then
-  printf "Install OpenTabletDriver? [Y/n]" && read -r install_otd
-fi
-
 printf "Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
 
 # ------------------------------------------------------------------------------
@@ -155,11 +148,6 @@ if [[ ! "${install_osu}" =~ ^[nN]$ ]]; then
   for package in "${osu_packages[@]}"; do
     install_aur_package "${package}"
   done
-fi
-
-printf "\nInstalling OpenTabletDriver...\n"
-if [[ ! "${install_otd}" ]]; then
-  install_aur_package "${otd_package}"
 fi
 
 printf "\nConfiguring greetd...\n"

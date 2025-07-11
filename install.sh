@@ -20,7 +20,7 @@ fi
 #   variables
 # ------------------------------------------------------------------------------
 
-declare -ar base_packages=(
+declare -ar BASE_PACKAGES=(
   "bottom"
   "chezmoi"
   "fastfetch"
@@ -45,7 +45,7 @@ declare -ar base_packages=(
   "xdg-user-dirs"
 )
 
-declare -ar hyprland_packages=(
+declare -ar HYPRLAND_PACKAGES=(
   "hypridle"
   "hyprland"
   "hyprpaper"
@@ -54,7 +54,7 @@ declare -ar hyprland_packages=(
   "xdg-desktop-portal-hyprland"
 )
 
-declare -ar font_packages=(
+declare -ar FONT_PACKAGES=(
   "inter-font"
   "noto-fonts"
   "noto-fonts-cjk"
@@ -65,29 +65,29 @@ declare -ar font_packages=(
   "ttf-sourcecodepro-nerd"
 )
 
-declare -ar theme_packages=(
+declare -ar THEME_PACKAGES=(
   "capitaine-cursors"
   "orchis-theme"
   "tela-circle-icon-theme-standard"
 )
 
 # order is important
-declare -ar osu_packages=(
+declare -ar OSU_PACKAGES=(
   "osu-mime"      # depency of osu-handler and osu-lazer-bin
   "osu-handler"   # optional dependency of osu-mime
   "osu-lazer-bin" # depends on osu-mime
 )
 
-readonly otd_package="opentabletdriver"
+readonly OTD_PACKAGE="opentabletdriver"
 
-build_directory="$(mktemp --directory)"
-readonly build_directory
+BUILD_DIRECTORY="$(mktemp --directory)"
+readonly BUILD_DIRECTORY
 cleanup() {
-  rm --force --recursive "${build_directory}"
+  rm --force --recursive "${BUILD_DIRECTORY}"
 }
 trap cleanup EXIT
 
-declare -Ar gsettings_values=(
+declare -Ar GSETTINGS_VALUES=(
   ["color-scheme"]="prefer-dark"
   ["cursor-theme"]="capitaine-cursors-light"
   ["cursor-size"]="24"
@@ -96,8 +96,8 @@ declare -Ar gsettings_values=(
   ["gtk-theme"]="Orchis-Dark-Compact"
 )
 
-readonly greetd_service="greetd.service"
-declare -ar user_services=(
+readonly GREETD_SERVICE="greetd.service"
+declare -ar USER_SERVICES=(
   "hypridle.service"
   "hyprpaper.service"
   "hyprpolkitagent.service"
@@ -106,7 +106,7 @@ declare -ar user_services=(
   "xdg-user-dirs-update.service"
 )
 
-readonly github_username="CjayDoesCode"
+readonly GITHUB_USERNAME="CjayDoesCode"
 
 # ------------------------------------------------------------------------------
 #   user input
@@ -126,7 +126,7 @@ printf "Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
 install_aur_package() {
   local package="$1"
   (
-    cd "${build_directory}"
+    cd "${BUILD_DIRECTORY}"
     git clone "https://aur.archlinux.org/${package}.git"
     cd "${package}"
     makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
@@ -139,21 +139,21 @@ install_aur_package() {
 
 printf "\nInstalling packages...\n"
 sudo pacman -Syu --noconfirm --needed \
-  "${base_packages[@]}" \
-  "${hyprland_packages[@]}" \
-  "${font_packages[@]}" \
-  "${theme_packages[@]}"
+  "${BASE_PACKAGES[@]}" \
+  "${HYPRLAND_PACKAGES[@]}" \
+  "${FONT_PACKAGES[@]}" \
+  "${THEME_PACKAGES[@]}"
 
 printf "\nInstalling osu!(lazer)...\n"
 if [[ ! "${install_osu}" =~ ^[nN]$ ]]; then
-  for package in "${osu_packages[@]}"; do
+  for package in "${OSU_PACKAGES[@]}"; do
     install_aur_package "${package}"
   done
 fi
 
 printf "\nInstalling OpenTabletDriver...\n"
 if [[ ! "${install_otd}" ]]; then
-  install_aur_package "${otd_package}"
+  install_aur_package "${OTD_PACKAGE}"
 fi
 
 printf "\nConfiguring greetd...\n"
@@ -170,17 +170,17 @@ user = "${USER}"
 CONFIG
 
 printf "\nConfiguring GTK...\n"
-for key in "${!gsettings_values[@]}"; do
+for key in "${!GSETTINGS_VALUES[@]}"; do
   gsettings set org.gnome.desktop.interface \
-    "${key}" "${gsettings_values[${key}]}"
+    "${key}" "${GSETTINGS_VALUES[${key}]}"
 done
 
 printf "\nEnabling services...\n"
-sudo systemctl enable "${greetd_service}"
-systemctl --user enable "${user_services[@]}"
+sudo systemctl enable "${GREETD_SERVICE}"
+systemctl --user enable "${USER_SERVICES[@]}"
 
 printf "\nApplying dotfiles...\n"
-chezmoi init --apply --force "${github_username}"
+chezmoi init --apply --force "${GITHUB_USERNAME}"
 
 if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
   printf "\nRemoving chezmoi...\n"

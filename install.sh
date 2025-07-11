@@ -69,6 +69,8 @@ osu_packages=(
   "osu-lazer-bin" # depends on osu-mime
 )
 
+otd_package="opentabletdriver"
+
 build_directory="$(mktemp --directory)"
 cleanup() {
   rm --force --recursive "${build_directory}"
@@ -100,8 +102,11 @@ github_username="CjayDoesCode"
 #   user input
 # ------------------------------------------------------------------------------
 
-printf "\n"
-printf "Install osu!(lazer)? [Y/n]: " && read -r install_osu
+printf "\nInstall osu!(lazer)? [Y/n]: " && read -r install_osu
+if [[ "${install_osu}" =~ ^[nN]$ ]]; then
+  printf "Install OpenTabletDriver? [Y/n]" && read -r install_otd
+fi
+
 printf "Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
 
 # ------------------------------------------------------------------------------
@@ -123,6 +128,16 @@ if [[ ! "${install_osu}" =~ ^[nN]$ ]]; then
       makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
     )
   done
+fi
+
+if [[ ! "${install_otd}" ]]; then
+  git clone \
+    "https://aur.archlinux.org/${otd_package}.git" \
+    "${build_directory}/${otd_package}"
+  (
+    cd "${build_directory}/${pkg}"
+    makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
+  )
 fi
 
 printf "\nConfiguring greetd...\n"

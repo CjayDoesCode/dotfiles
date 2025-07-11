@@ -110,6 +110,20 @@ fi
 printf "Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
 
 # ------------------------------------------------------------------------------
+#   functions
+# ------------------------------------------------------------------------------
+
+install_aur_package() {
+  local package="$1"
+  (
+    cd "${build_directory}"
+    git clone "https://aur.archlinux.org/${package}.git"
+    cd "${package}"
+    makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
+  )
+}
+
+# ------------------------------------------------------------------------------
 #   Installation
 # ------------------------------------------------------------------------------
 
@@ -121,23 +135,13 @@ sudo pacman -Syu --noconfirm --needed \
   "${theme_packages[@]}"
 
 if [[ ! "${install_osu}" =~ ^[nN]$ ]]; then
-  for pkg in "${osu_packages[@]}"; do
-    git clone "https://aur.archlinux.org/${pkg}.git" "${build_directory}/${pkg}"
-    (
-      cd "${build_directory}/${pkg}"
-      makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
-    )
+  for package in "${osu_packages[@]}"; do
+    install_aur_package "${package}"
   done
 fi
 
 if [[ ! "${install_otd}" ]]; then
-  git clone \
-    "https://aur.archlinux.org/${otd_package}.git" \
-    "${build_directory}/${otd_package}"
-  (
-    cd "${build_directory}/${pkg}"
-    makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
-  )
+  install_aur_package "${otd_package}"
 fi
 
 printf "\nConfiguring greetd...\n"

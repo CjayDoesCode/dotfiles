@@ -69,7 +69,11 @@ osu_packages=(
   "osu-lazer-bin" # depends on osu-mime
 )
 
-build_directory="$(mktemp -d)"
+build_directory="$(mktemp --directory)"
+cleanup() {
+  rm --force --recursive "${build_directory}"
+}
+trap cleanup EXIT
 
 declare -A gsettings_values=(
   ["color-scheme"]="prefer-dark"
@@ -89,7 +93,6 @@ github_username="CjayDoesCode"
 printf "\n"
 printf "Install osu!(lazer)? [Y/n]: " && read -r install_osu
 printf "Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
-printf "Reboot after installation? [Y/n]: " && read -r reboot
 
 # ------------------------------------------------------------------------------
 #   Installation
@@ -161,4 +164,3 @@ fi
 # ------------------------------------------------------------------------------
 
 printf "\nInstallation completed.\n\n"
-[[ ! "${reboot}" =~ ^[nN]$ ]] && systemctl reboot

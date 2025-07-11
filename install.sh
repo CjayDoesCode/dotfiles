@@ -149,13 +149,7 @@ sudo systemctl enable "${services[@]}"
 systemctl --user enable "${user_services[@]}"
 
 printf "\nApplying dotfiles...\n"
-chezmoi init --force "${github_username}"
-if [[ "${install_osu}" =~ ^[nN]$ ]]; then
-  chezmoi forget --force \
-    "${HOME}/.local/share/applications" \
-    "${HOME}/.local/share/icons"
-fi
-chezmoi apply --force
+chezmoi init --apply --force "${github_username}"
 
 if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
   printf "\nRemoving chezmoi...\n"

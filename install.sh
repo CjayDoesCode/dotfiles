@@ -134,12 +134,14 @@ sudo pacman -Syu --noconfirm --needed \
   "${font_packages[@]}" \
   "${theme_packages[@]}"
 
+printf "\nInstalling osu!(lazer)...\n"
 if [[ ! "${install_osu}" =~ ^[nN]$ ]]; then
   for package in "${osu_packages[@]}"; do
     install_aur_package "${package}"
   done
 fi
 
+printf "\nInstalling OpenTabletDriver...\n"
 if [[ ! "${install_otd}" ]]; then
   install_aur_package "${otd_package}"
 fi

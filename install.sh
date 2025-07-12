@@ -10,7 +10,7 @@ if ! grep --quiet "^ID=arch$" /etc/os-release; then
   printf "\nThis script only supports Arch Linux.\n\n" >&2
   exit 1
 fi
- 
+
 if [[ "${EUID}" -eq 0 ]]; then
   printf "\nThis script must not be run as root.\n\n" >&2
   exit 1
@@ -78,6 +78,9 @@ osu_packages=(
   "osu-lazer-bin" # depends on osu-mime
 )
 
+otd_package="opentabletdriver"
+otd_service="opentabletdriver.service"
+
 build_directory="$(mktemp --directory)"
 
 declare -A gsettings_values=(
@@ -102,24 +105,43 @@ user_services=(
 github_username="CjayDoesCode"
 
 # ------------------------------------------------------------------------------
-#   user input
-# ------------------------------------------------------------------------------
-
-printf "\nInstall osu!(lazer)? [Y/n]: " && read -r install_osu
-printf "Keep chezmoi? [Y/n]: " && read -r keep_chezmoi
-
-# ------------------------------------------------------------------------------
 #   functions
 # ------------------------------------------------------------------------------
 
+confirm() {
+  local variable="$1"
+  local prompt="$2"
+  local input=""
+
+  while true; do
+    printf "%b [y/n]: " "${prompt}"
+    read -r input
+    case "${input,,}" in
+    y | yes)
+      declare "${variable}=true"
+      break
+      ;;
+    n | no)
+      declare "${variable}=false"
+      break
+      ;;
+    *)
+      printf "\nInvalid input. Try again.\n"
+      ;;
+    esac
+  done
+}
+
 install_aur_package() {
   local package="$1"
-  (
-    cd "${build_directory}"
-    git clone "https://aur.archlinux.org/${package}.git"
-    cd "${package}"
-    makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
-  )
+  
+  curl --output "${build_directory}/${package}.tar.gz" --location \
+    "https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz"
+  tar --extract --file "${build_directory}/${package}.tar.gz"
+  
+  pushd "${build_directory}/${package}"
+  makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
+  popd
 }
 
 # ------------------------------------------------------------------------------
@@ -133,6 +155,24 @@ cleanup() {
 trap cleanup EXIT
 
 # ------------------------------------------------------------------------------
+#   user input
+# ------------------------------------------------------------------------------
+
+install_osu=""
+install_otd=""
+keep_chezmoi=""
+
+declare -A prompts=(
+  ["install_osu"]="\nInstall osu!(lazer)?"
+  ["install_otd"]="\nInstall OpenTabletDriver?"
+  ["keep_chezmoi"]="\nKeep chezmoi (dotfile manager)?"
+)
+
+for variable in "${!prompts[@]}"; do
+  confirm "${prompts[${variable}]}" "${variable}"
+done
+
+# ------------------------------------------------------------------------------
 #   installation
 # ------------------------------------------------------------------------------
 
@@ -143,11 +183,23 @@ sudo pacman -Syu --noconfirm --needed \
   "${font_packages[@]}" \
   "${theme_packages[@]}"
 
-printf "\nInstalling osu!(lazer)...\n"
-if [[ ! "${install_osu}" =~ ^[nN]$ ]]; then
-  for package in "${osu_packages[@]}"; do
-    install_aur_package "${package}"
-  done
+if [[ "${install_osu}" == "true" || "${install_otd}" == "true" ]]; then
+  if pacman -Qs "^base-devel$" >/dev/null; then
+    pacman -S --noconfirm --needed base-devel
+  fi
+
+  printf "\nInstalling osu!(lazer)...\n"
+  if [[ "${install_osu}" == "true" ]]; then
+    for package in "${osu_packages[@]}"; do
+      install_aur_package "${package}"
+    done
+  fi
+
+  printf "\nInstalling OpenTabletDriver...\n"
+  if [[ "${install_otd}" == "true" ]]; then
+    install_aur_package "${otd_package}"
+    user_services+=("${otd_service}")
+  fi
 fi
 
 printf "\nConfiguring greetd...\n"
@@ -176,7 +228,7 @@ systemctl --user enable "${user_services[@]}"
 printf "\nApplying dotfiles...\n"
 chezmoi init --apply --force "${github_username}"
 
-if [[ "${keep_chezmoi}" =~ ^[nN]$ ]]; then
+if [[ "${keep_chezmoi}" == "false" ]]; then
   printf "\nRemoving chezmoi...\n"
   chezmoi purge --force
   sudo pacman -Rns --noconfirm chezmoi

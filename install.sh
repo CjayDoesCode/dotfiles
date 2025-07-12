@@ -184,7 +184,7 @@ sudo pacman -Syu --noconfirm --needed \
   "${theme_packages[@]}"
 
 if [[ "${install_osu}" == "true" || "${install_otd}" == "true" ]]; then
-  if pacman -Qs "^base-devel$" >/dev/null; then
+  if ! pacman -Qs "^base-devel$" >/dev/null; then
     pacman -S --noconfirm --needed base-devel
   fi
 

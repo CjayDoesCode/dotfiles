@@ -118,11 +118,11 @@ confirm() {
     read -r input
     case "${input,,}" in
     y | yes)
-      declare "${variable}=true"
+      declare -g "${variable}=true"
       break
       ;;
     n | no)
-      declare "${variable}=false"
+      declare -g "${variable}=false"
       break
       ;;
     *)
@@ -169,7 +169,7 @@ declare -A prompts=(
 )
 
 for variable in "${!prompts[@]}"; do
-  confirm "${prompts[${variable}]}" "${variable}"
+  confirm "${variable}" "${prompts[${variable}]}"
 done
 
 # ------------------------------------------------------------------------------

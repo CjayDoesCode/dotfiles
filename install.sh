@@ -109,24 +109,23 @@ github_username="CjayDoesCode"
 # ------------------------------------------------------------------------------
 
 confirm() {
-  local variable="$1"
-  local prompt="$2"
+  local prompt="$1"
   local input=""
 
   while true; do
-    printf "%b [y/n]: " "${prompt}"
+    printf "%b [y/n]: " "${prompt}" >&2
     read -r input
     case "${input,,}" in
     y | yes)
-      declare -g "${variable}=true"
+      printf "true"
       break
       ;;
     n | no)
-      declare -g "${variable}=false"
+      printf "false"
       break
       ;;
     *)
-      printf "\nInvalid input. Try again.\n"
+      printf "\nInvalid input. Try again.\n" >&2
       ;;
     esac
   done
@@ -135,7 +134,7 @@ confirm() {
 install_aur_package() {
   local package="$1"
 
-  curl --silent --location \
+  curl --location \
     "https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz" |
     tar --extract --gzip --directory "${build_directory}"
 
@@ -169,7 +168,7 @@ declare -A prompts=(
 )
 
 for variable in "${!prompts[@]}"; do
-  confirm "${variable}" "${prompts[${variable}]}"
+  declare "${variable}=$(confirm "${prompts[${variable}]}")"
 done
 
 # ------------------------------------------------------------------------------

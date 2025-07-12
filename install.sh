@@ -134,11 +134,11 @@ confirm() {
 
 install_aur_package() {
   local package="$1"
-  
-  curl --output "${build_directory}/${package}.tar.gz" --location \
-    "https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz"
-  tar --extract --file "${build_directory}/${package}.tar.gz"
-  
+
+  curl --silent --location \
+    "https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz" |
+    tar --extract --gzip --directory "${build_directory}"
+
   pushd "${build_directory}/${package}"
   makepkg --clean --force --install --rmdeps --syncdeps --noconfirm --needed
   popd
@@ -185,7 +185,7 @@ sudo pacman -Syu --noconfirm --needed \
 
 if [[ "${install_osu}" == "true" || "${install_otd}" == "true" ]]; then
   if ! pacman -Qs "^base-devel$" >/dev/null; then
-    pacman -S --noconfirm --needed base-devel
+    sudo pacman -S --noconfirm --needed base-devel
   fi
 
   printf "\nInstalling osu!(lazer)...\n"

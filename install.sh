@@ -185,18 +185,19 @@ sudo pacman -Syu --noconfirm --needed \
 
 if [[ "${install_osu}" == "true" || "${install_otd}" == "true" ]]; then
   if ! pacman -Qs "^base-devel$" >/dev/null; then
+    printf "\nInstalling base-devel...\n"
     sudo pacman -S --noconfirm --needed base-devel
   fi
 
-  printf "\nInstalling osu!(lazer)...\n"
   if [[ "${install_osu}" == "true" ]]; then
+    printf "\nInstalling osu!(lazer)...\n"
     for package in "${osu_packages[@]}"; do
       install_aur_package "${package}"
     done
   fi
 
-  printf "\nInstalling OpenTabletDriver...\n"
   if [[ "${install_otd}" == "true" ]]; then
+    printf "\nInstalling OpenTabletDriver...\n"
     install_aur_package "${otd_package}"
     user_services+=("${otd_service}")
   fi

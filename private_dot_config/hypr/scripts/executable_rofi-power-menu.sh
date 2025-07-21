@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-declare -A options=(
+declare -A option_icons=(
   ["Lock"]="system-lock-screen"
   ["Sleep"]="system-suspend"
   ["Hibernate"]="system-hibernate"
@@ -9,8 +9,8 @@ declare -A options=(
 )
 
 print_options() {
-  for key in "${!options[@]}"; do
-    printf "%s\\0icon\\x1f%s\n" "${key}" "${options["${key}"]}"
+  for option in "${!option_icons[@]}"; do
+    printf "%s\\0icon\\x1f%s\n" "${option}" "${option_icons[${option}]}"
   done
 }
 

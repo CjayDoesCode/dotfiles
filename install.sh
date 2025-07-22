@@ -300,7 +300,7 @@ install_aur_packages() {
     '--syncdeps' '--noconfirm' '--needed'
   )
 
-  if ! is_installed "${AUR_PREREQUISITE}" >/dev/null; then
+  if ! is_package_installed "${AUR_PREREQUISITE}" >/dev/null; then
     sudo pacman -S --noconfirm --needed "${AUR_PREREQUISITE}" || return 1
   fi
 
@@ -381,7 +381,7 @@ is_package_available() {
   return 1
 }
 
-is_installed() {
+is_package_installed() {
   local package="$1"
 
   local line=''

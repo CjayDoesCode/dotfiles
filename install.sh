@@ -8,7 +8,6 @@ readonly BASE_PACKAGES=(
   'bottom'
   'chezmoi'
   'fastfetch'
-  'firefox'
   'greetd'
   'greetd-tuigreet'
   'grim'
@@ -84,11 +83,26 @@ main() {
 
   # ----  variables  -----------------------------------------------------------
 
+  local browser_package='firefox'
+
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+    --browser)
+      browser_package="$2"
+      shift 2
+      ;;
+    *)
+      shift
+      ;;
+    esac
+  done
+
   local packages=(
     "${BASE_PACKAGES[@]}"
     "${FONT_PACKAGES[@]}"
     "${HYPRLAND_PACKAGES[@]}"
     "${THEME_PACKAGES[@]}"
+    "${browser_package}"
   )
 
   local install_osu=''
@@ -115,6 +129,11 @@ main() {
   if ! is_root; then
     print_error 'this script must not be run as root.\n\n'
     exit 1
+  fi
+
+  if ! is_package_available "${browser_package}"; then
+    print_error "'${browser_package}' not found.\n\n"
+    return 1
   fi
 
   # ----  input  ---------------------------------------------------------------
@@ -351,6 +370,17 @@ is_root() {
   [[ "${EUID}" -eq 0 ]] || return 1
 }
 
+is_package_available() {
+  local package="$1"
+
+  local line=''
+  while read -r line; do
+    [[ "${line}" == "${package}" ]] && return 0
+  done < <(pacman -Sqs "^${package}\$")
+
+  return 1
+}
+
 is_installed() {
   local package="$1"
 
@@ -402,3 +432,5 @@ print_error() {
   local message="$1"
   print --color red "error: ${message}" >&2
 }
+
+main "$@"

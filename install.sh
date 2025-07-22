@@ -339,7 +339,12 @@ remove_chezmoi() {
 # ------------------------------------------------------------------------------
 
 is_arch_linux() {
-  grep -Fx --quiet 'ID=arch' /etc/os-release || return 1
+  local line=''
+  while read -r line; do
+    [[ "${line}" == 'ID=arch' ]] && return 0
+  done < /etc/os-release
+
+  return 1
 }
 
 is_root() {
@@ -348,7 +353,13 @@ is_root() {
 
 is_installed() {
   local package="$1"
-  pacman -Q --quiet | grep -Fx --quiet "${package}"
+
+  local line=''
+  while read -r line;  do
+    [[ "${line}" == "${package}" ]] && return 0
+  done < <(pacman -Q --quiet)
+
+  return 1
 }
 
 # ------------------------------------------------------------------------------

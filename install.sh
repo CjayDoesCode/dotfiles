@@ -241,6 +241,7 @@ download_build_files() {
 
   local build_files_directory=''
   local temporary_directory=''
+
   local curl_arguments=(
     '--location'
     '--output' "${package}.tar.gz"

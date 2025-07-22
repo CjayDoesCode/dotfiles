@@ -280,7 +280,7 @@ install_aur_packages() {
     '--syncdeps' '--noconfirm' '--needed'
   )
 
-  if ! pacman -Qs "^${AUR_PREREQUISITE}\$" >/dev/null; then
+  if ! is_installed "${AUR_PREREQUISITE}" >/dev/null; then
     sudo pacman -S --noconfirm --needed "${AUR_PREREQUISITE}" || return 1
   fi
 
@@ -338,11 +338,16 @@ remove_chezmoi() {
 # ------------------------------------------------------------------------------
 
 is_arch_linux() {
-  grep --quiet '^ID=arch$' /etc/os-release || return 1
+  grep -Fx --quiet 'ID=arch' /etc/os-release || return 1
 }
 
 is_root() {
   [[ "${EUID}" -eq 0 ]] || return 1
+}
+
+is_installed() {
+  local package="$1"
+  pacman -Q --quiet | grep -Fx --quiet "${package}"
 }
 
 # ------------------------------------------------------------------------------

@@ -342,7 +342,7 @@ is_arch_linux() {
   local line=''
   while read -r line; do
     [[ "${line}" == 'ID=arch' ]] && return 0
-  done < /etc/os-release
+  done </etc/os-release
 
   return 1
 }
@@ -355,9 +355,9 @@ is_installed() {
   local package="$1"
 
   local line=''
-  while read -r line;  do
+  while read -r line; do
     [[ "${line}" == "${package}" ]] && return 0
-  done < <(pacman -Q --quiet)
+  done < <(pacman -Qqs "^${package}\$")
 
   return 1
 }

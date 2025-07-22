@@ -232,7 +232,6 @@ confirm() {
 
 install_packages() {
   local packages=("$@")
-  print_info 'installing packages...'
   sudo pacman -Syu --noconfirm --needed "${packages[@]}" || return 1
 }
 

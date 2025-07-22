@@ -55,9 +55,14 @@ readonly THEME_PACKAGES=(
   'tela-circle-icon-theme-standard'
 )
 
+readonly AUR_PREREQUISITE='base-devel'
+
 readonly OSU_PACKAGES=('osu-mime' 'osu-handler' 'osu-lazer-bin')
+
 readonly OTD_PACKAGE='opentabletdriver'
 readonly OTD_SERVICE='opentabletdriver.service'
+
+readonly GREETD_SERVICE='greetd.service'
 
 declare -Ar GSETTINGS_VALUES=(
   ['color-scheme']='prefer-dark'
@@ -88,9 +93,8 @@ main() {
 
   local install_osu=''
   local install_otd=''
-  local keep_chezmoi=''
 
-  local services=(
+  local user_services=(
     'hypridle.service'
     'hyprpaper.service'
     'hyprpolkitagent.service'
@@ -99,10 +103,12 @@ main() {
     'xdg-user-dirs-update.service'
   )
 
+  local keep_chezmoi=''
+
   # ----  checks  --------------------------------------------------------------
 
   if ! is_arch_linux; then
-    print_error 'this script only supports Arch Linux.\n\n'
+    print_error 'this script only supports arch linux.\n\n'
     exit 1
   fi
 
@@ -114,14 +120,13 @@ main() {
   # ----  input  ---------------------------------------------------------------
 
   install_osu="$(confirm 'install osu!(lazer)?')"
-  install_otd="$(confirm 'install OpenTabletDriver?')"
+  install_otd="$(confirm 'install opentabletdriver?')"
+
+  [[ "${install_otd}" == 'true' ]] && user_services+=("${OTD_SERVICE}")
+
   keep_chezmoi="$(confirm 'install chezmoi (dotfile manager)?')"
 
-  if [[ "${install_osu}" == 'true' || "${install_otd}" == 'true' ]]; then
-    packages+=("base-devel")
-  fi
-
-  [[ ${install_otd} == 'true' ]] && services+=("${OTD_SERVICE}")
+  confirm 'proceed with installation?' || return
 
   # ----  installation  --------------------------------------------------------
 
@@ -133,16 +138,16 @@ main() {
 
   if [[ "${install_osu}" == 'true' ]]; then
     print_info 'installing osu!(lazer)...\n\n'
-    if ! install_osu; then
+    if ! install_aur_packages "${OSU_PACKAGES[@]}"; then
       print_error 'failed to install osu!(lazer).\n\n'
       return 1
     fi
   fi
 
   if [[ "${install_otd}" == 'true' ]]; then
-    print_info 'installing OpenTabletDriver...\n\n'
-    if ! install_otd; then
-      print_error 'failed to install OpenTabletDriver.\n\n'
+    print_info 'installing opentabletdriver...\n\n'
+    if ! install_aur_packages "${OTD_PACKAGE}"; then
+      print_error 'failed to install opentabletdriver.\n\n'
       return 1
     fi
   fi
@@ -159,15 +164,15 @@ main() {
     return 1
   fi
 
-  print_info 'enable services...\n\n'
-  if ! enable_services "${services}"; then
-    print_error 'failed to enable services\n\n'
+  print_info 'enabling user services...\n\n'
+  if ! enable_user_services "${user_services[@]}"; then
+    print_error 'failed to enable user services.\n\n'
     return 1
   fi
 
   print_info 'applying dotfiles...\n\n'
   if ! apply_dotfiles; then
-    print_error 'failed to apply dotfiles\n\n'
+    print_error 'failed to apply dotfiles.\n\n'
     return 1
   fi
 
@@ -186,35 +191,14 @@ main() {
 #       input functions
 # ------------------------------------------------------------------------------
 
-# usage: scan [--password] prompt
 scan() {
   local prompt=''
   local input=''
 
-  local password='false'
-
-  while [[ "$#" -gt 0 ]]; do
-    case "$1" in
-    --password)
-      password='true'
-      shift
-      ;;
-    *)
-      prompt="$1"
-      shift
-      ;;
-    esac
-  done
-
   print --color blue "${prompt}" >&2
 
-  if [[ "${password}" == 'true' ]]; then
-    read -rs input
-    print '\n\n' >&2
-  else
-    read -r input
-    print '\n' >&2
-  fi
+  read -r input
+  print '\n' >&2
 
   printf '%s' "${input}"
 }
@@ -228,9 +212,11 @@ confirm() {
 
     case "${input,,}" in
     y | yes)
+      printf 'true'
       return 0
       ;;
     n | no)
+      printf 'false'
       return 1
       ;;
     *)
@@ -250,47 +236,62 @@ install_packages() {
   sudo pacman -Syu --noconfirm --needed "${packages[@]}" || return 1
 }
 
-install_aur_package() {
+download_build_files() {
   local package="$1"
 
-  local build_directory=''
-  local previous_directory="${PWD}"
+  local build_files_directory=''
+  local temporary_directory=''
+  local curl_arguments=(
+    '--location'
+    '--output' "${package}.tar.gz"
+    "https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz"
+  )
 
-  local url="https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz"
+  temporary_directory="$(mktemp --directory)" || return 1
 
+  (
+    cd "${temporary_directory}" || return 1
+
+    local retries=0
+    local max_retries=3
+    local interval=5
+
+    until curl "${curl_arguments[@]}" 2>/dev/null; do
+      ((++retries > max_retries)) && return 1
+      print_error 'failed to download file. retrying...\n\n'
+      sleep "${interval}"
+    done
+
+    tar --extract --file "${package}.tar.gz" || return 1
+  ) || return 1
+
+  build_files_directory="${temporary_directory}/${package}"
+  [[ ! -e "${build_files_directory}" ]] && return 1
+
+  printf '%s' "${build_files_directory}"
+}
+
+install_aur_packages() {
+  local packages=("$@")
+
+  local build_files_directory=''
   local makepkg_options=(
     '--clean' '--force' '--install' '--rmdeps'
     '--syncdeps' '--noconfirm' '--needed'
   )
 
-  build_directory="$(mktemp --directory)" || return 1
-  cd "${build_directory}" || return 1
+  if ! pacman -Qs "^${AUR_PREREQUISITE}\$" >/dev/null; then
+    sudo pacman -S --noconfirm --needed "${AUR_PREREQUISITE}" || return 1
+  fi
 
-  local retries=0
-  local max_retries=3
-  local interval=5
-
-  until curl --location --output "${package}.tar.gz" "${url}" 2>/dev/null; do
-    ((++retries > max_retries)) && return 1
-    print_error 'failed to download file. retrying...\n\n'
-    sleep "${interval}"
+  local package=''
+  for package in "${packages[@]}"; do
+    build_files_directory="$(download_build_files "${package}")" || return 1
+    (
+      cd "${build_files_directory}" || return 1
+      makepkg "${makepkg_options[@]}" || return 1
+    ) || return 1
   done
-
-  tar --extract --gzip --file "${package}.tar.gz" || return 1
-  cd "${package}" || return 1
-
-  makepkg "${makepkg_options[@]}" || return 1
-  cd "${previous_directory}" || return 1
-
-  rm --force "${build_directory}" || return 1
-}
-
-install_osu() {
-  install_aur_package("${OSU_PACKAGES[@]}") || return 1
-}
-
-install_otd() {
-  install_aur_package("${OTD_PACKAGE}") || return 1
 }
 
 configure_greetd() {
@@ -306,21 +307,21 @@ configure_greetd() {
 		user = "${USER}"
 	CONFIG
 
-	sudo systemctl enable greetd.service || return 1
+  sudo systemctl enable "${GREETD_SERVICE}" || return 1
 }
 
 configure_gtk() {
   local schema='org.gnome.desktop.interface'
-  local key=''
 
+  local key=''
   for key in "${!GSETTINGS_VALUES[@]}"; do
     gsettings set "${schema}" "${key}" "${GSETTINGS_VALUES[${key}]}" || return 1
   done
 }
 
-enable_services() {
-  local services=("$@")
-  systemctl --user enable "${services[@]}" || return 1
+enable_user_services() {
+  local user_services=("$@")
+  systemctl --user enable "${user_services[@]}" || return 1
 }
 
 apply_dotfiles() {

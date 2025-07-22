@@ -126,6 +126,7 @@ main() {
 
   keep_chezmoi="$(confirm 'install chezmoi (dotfile manager)?')"
 
+  print --color yellow 'warning: script will perform a full system upgrade.\n\n'
   confirm 'proceed with installation?' || return
 
   # ----  installation  --------------------------------------------------------

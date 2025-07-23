@@ -282,7 +282,7 @@ download_build_files() {
       sleep "${interval}"
     done
 
-    tar --extract --file "${package}.tar.gz" || return 1
+    tar --extract --file --gzip "${package}.tar.gz" || return 1
   ) || return 1
 
   build_files_directory="${temporary_directory}/${package}"

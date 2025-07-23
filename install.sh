@@ -131,6 +131,11 @@ main() {
     exit 1
   fi
 
+  if ! is_connected; then
+    print_error 'no internet connection.\n\n'
+    return 1
+  fi
+
   if ! is_package_available "${browser_package}"; then
     print_error "'${browser_package}' not found.\n\n"
     return 1
@@ -145,7 +150,6 @@ main() {
 
   keep_chezmoi="$(confirm 'install chezmoi (dotfile manager)?')"
 
-  print --color yellow 'warning: script will perform a full system upgrade.\n\n'
   confirm 'proceed with installation?' || return
 
   # ----  installation  --------------------------------------------------------
@@ -208,7 +212,7 @@ main() {
 }
 
 # ------------------------------------------------------------------------------
-#       check functions
+#       helper functions
 # ------------------------------------------------------------------------------
 
 is_arch_linux() {
@@ -222,6 +226,10 @@ is_arch_linux() {
 
 is_root() {
   [[ "${EUID}" -eq 0 ]] || return 1
+}
+
+is_connected() {
+  ping -c 1 -W 5 archlinux.org &>/dev/null || return 1
 }
 
 is_package_available() {
@@ -244,6 +252,83 @@ is_package_installed() {
   done < <(pacman -Qqs "^${package}\$")
 
   return 1
+}
+
+download_build_files() {
+  local package="$1"
+
+  local build_files_directory=''
+  local temporary_directory=''
+
+  local curl_arguments=(
+    '--location'
+    '--output' "${package}.tar.gz"
+    "https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz"
+  )
+
+  temporary_directory="$(mktemp --directory)" || return 1
+
+  (
+    cd "${temporary_directory}" || return 1
+
+    local retries=0
+    local max_retries=3
+    local interval=5
+
+    until curl "${curl_arguments[@]}" 2>/dev/null; do
+      ((++retries > max_retries)) && return 1
+      print_error 'failed to download file. retrying...\n\n'
+      sleep "${interval}"
+    done
+
+    tar --extract --file --gzip "${package}.tar.gz" || return 1
+  ) || return 1
+
+  build_files_directory="${temporary_directory}/${package}"
+  [[ ! -e "${build_files_directory}" ]] && return 1
+
+  printf '%s' "${build_files_directory}"
+}
+
+# ------------------------------------------------------------------------------
+#       output functions
+# ------------------------------------------------------------------------------
+
+# usage: print [--color color] message
+print() {
+  local message=''
+  local color=''
+
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+    --color)
+      color="$2"
+      shift 2
+      ;;
+    *)
+      message="$1"
+      shift
+      ;;
+    esac
+  done
+
+  if [[ -n "${color}" ]]; then
+    local color_sequence="\\033[1;${COLOR_CODES[${color}]}m"
+    local reset_sequence='\033[0m'
+    printf '%b' "${color_sequence}${message}${reset_sequence}"
+  else
+    printf '%b' "${message}"
+  fi
+}
+
+print_info() {
+  local message="$1"
+  print --color green "info: ${message}"
+}
+
+print_error() {
+  local message="$1"
+  print --color red "error: ${message}" >&2
 }
 
 # ------------------------------------------------------------------------------
@@ -291,43 +376,7 @@ confirm() {
 
 install_packages() {
   local packages=("$@")
-  sudo pacman -Syu --noconfirm --needed "${packages[@]}" || return 1
-}
-
-download_build_files() {
-  local package="$1"
-
-  local build_files_directory=''
-  local temporary_directory=''
-
-  local curl_arguments=(
-    '--location'
-    '--output' "${package}.tar.gz"
-    "https://aur.archlinux.org/cgit/aur.git/snapshot/${package}.tar.gz"
-  )
-
-  temporary_directory="$(mktemp --directory)" || return 1
-
-  (
-    cd "${temporary_directory}" || return 1
-
-    local retries=0
-    local max_retries=3
-    local interval=5
-
-    until curl "${curl_arguments[@]}" 2>/dev/null; do
-      ((++retries > max_retries)) && return 1
-      print_error 'failed to download file. retrying...\n\n'
-      sleep "${interval}"
-    done
-
-    tar --extract --file --gzip "${package}.tar.gz" || return 1
-  ) || return 1
-
-  build_files_directory="${temporary_directory}/${package}"
-  [[ ! -e "${build_files_directory}" ]] && return 1
-
-  printf '%s' "${build_files_directory}"
+  sudo pacman -S --noconfirm --needed "${packages[@]}" || return 1
 }
 
 install_aur_packages() {
@@ -390,47 +439,6 @@ apply_dotfiles() {
 remove_chezmoi() {
   chezmoi purge --force || return 1
   sudo pacman -Rns --noconfirm chezmoi || return 1
-}
-
-# ------------------------------------------------------------------------------
-#       output functions
-# ------------------------------------------------------------------------------
-
-# usage: print [--color color] message
-print() {
-  local message=''
-  local color=''
-
-  while [[ "$#" -gt 0 ]]; do
-    case "$1" in
-    --color)
-      color="$2"
-      shift 2
-      ;;
-    *)
-      message="$1"
-      shift
-      ;;
-    esac
-  done
-
-  if [[ -n "${color}" ]]; then
-    local color_sequence="\\033[1;${COLOR_CODES[${color}]}m"
-    local reset_sequence='\033[0m'
-    printf '%b' "${color_sequence}${message}${reset_sequence}"
-  else
-    printf '%b' "${message}"
-  fi
-}
-
-print_info() {
-  local message="$1"
-  print --color green "info: ${message}"
-}
-
-print_error() {
-  local message="$1"
-  print --color red "error: ${message}" >&2
 }
 
 main "$@"

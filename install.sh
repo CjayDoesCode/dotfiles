@@ -145,7 +145,7 @@ main() {
 
   keep_chezmoi="$(confirm 'install chezmoi (dotfile manager)?')"
 
-  confirm 'proceed with installation?' || return
+  confirm 'proceed with installation?' >/dev/null || return
 
   # ----  installation  --------------------------------------------------------
 

@@ -131,11 +131,6 @@ main() {
     exit 1
   fi
 
-  if ! is_connected; then
-    print_error 'no internet connection.\n\n'
-    return 1
-  fi
-
   if ! is_package_available "${browser_package}"; then
     print_error "'${browser_package}' not found.\n\n"
     return 1
@@ -226,10 +221,6 @@ is_arch_linux() {
 
 is_root() {
   [[ "${EUID}" -eq 0 ]] || return 1
-}
-
-is_connected() {
-  ping -c 1 -W 5 archlinux.org &>/dev/null || return 1
 }
 
 is_package_available() {

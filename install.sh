@@ -126,7 +126,7 @@ main() {
     exit 1
   fi
 
-  if ! is_root; then
+  if is_root; then
     print_error 'this script must not be run as root.\n\n'
     exit 1
   fi

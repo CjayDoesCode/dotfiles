@@ -327,7 +327,7 @@ print_error() {
 # ------------------------------------------------------------------------------
 
 scan() {
-  local prompt=''
+  local prompt="$1"
   local input=''
 
   print --color blue "${prompt}" >&2

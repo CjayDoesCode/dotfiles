@@ -208,6 +208,45 @@ main() {
 }
 
 # ------------------------------------------------------------------------------
+#       check functions
+# ------------------------------------------------------------------------------
+
+is_arch_linux() {
+  local line=''
+  while read -r line; do
+    [[ "${line}" == 'ID=arch' ]] && return 0
+  done </etc/os-release
+
+  return 1
+}
+
+is_root() {
+  [[ "${EUID}" -eq 0 ]] || return 1
+}
+
+is_package_available() {
+  local package="$1"
+
+  local line=''
+  while read -r line; do
+    [[ "${line}" == "${package}" ]] && return 0
+  done < <(pacman -Sqs "^${package}\$")
+
+  return 1
+}
+
+is_package_installed() {
+  local package="$1"
+
+  local line=''
+  while read -r line; do
+    [[ "${line}" == "${package}" ]] && return 0
+  done < <(pacman -Qqs "^${package}\$")
+
+  return 1
+}
+
+# ------------------------------------------------------------------------------
 #       input functions
 # ------------------------------------------------------------------------------
 
@@ -351,45 +390,6 @@ apply_dotfiles() {
 remove_chezmoi() {
   chezmoi purge --force || return 1
   sudo pacman -Rns --noconfirm chezmoi || return 1
-}
-
-# ------------------------------------------------------------------------------
-#       check functions
-# ------------------------------------------------------------------------------
-
-is_arch_linux() {
-  local line=''
-  while read -r line; do
-    [[ "${line}" == 'ID=arch' ]] && return 0
-  done </etc/os-release
-
-  return 1
-}
-
-is_root() {
-  [[ "${EUID}" -eq 0 ]] || return 1
-}
-
-is_package_available() {
-  local package="$1"
-
-  local line=''
-  while read -r line; do
-    [[ "${line}" == "${package}" ]] && return 0
-  done < <(pacman -Sqs "^${package}\$")
-
-  return 1
-}
-
-is_package_installed() {
-  local package="$1"
-
-  local line=''
-  while read -r line; do
-    [[ "${line}" == "${package}" ]] && return 0
-  done < <(pacman -Qqs "^${package}\$")
-
-  return 1
 }
 
 # ------------------------------------------------------------------------------

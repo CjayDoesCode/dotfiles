@@ -148,7 +148,7 @@ main() {
 
   [[ "${install_otd}" == 'true' ]] && user_services+=("${OTD_SERVICE}")
 
-  keep_chezmoi="$(confirm 'install chezmoi (dotfile manager)?')"
+  keep_chezmoi="$(confirm 'keep chezmoi (dotfile manager)?')"
 
   confirm 'proceed with installation?' >/dev/null || return
 

@@ -101,6 +101,7 @@ main() {
       ;;
     *)
       print_error 'invalid option.\n\n'
+      return 1
       ;;
     esac
   done
@@ -157,6 +158,12 @@ main() {
 
   # ----  installation  --------------------------------------------------------
 
+  print_info 'disabling password prompt...\n\n'
+  if ! disable_password_prompt; then
+    print_error 'failed to disable password prompt.\n\n'
+    return 1
+  fi
+
   print_info 'installing packages...\n\n'
   if ! install_packages "${packages[@]}"; then
     print_error 'failed to install packages.\n\n'
@@ -209,6 +216,12 @@ main() {
       print_error 'failed to remove chezmoi.\n\n'
       return 1
     fi
+  fi
+
+  print_info 'enabling password prompt...\n\n'
+  if ! enable_password_prompt; then
+    print_error 'failed to enable password prompt.\n\n'
+    return 1
   fi
 
   print_info 'installation completed.\n\n'
@@ -378,6 +391,15 @@ confirm() {
 #       install functions
 # ------------------------------------------------------------------------------
 
+disable_password_prompt() {
+  local entry='Defaults:'"${USER}"' !authenticate'
+  local config="/etc/sudoers.d/${USER}"
+
+  printf '%s' "${entry}" | sudo tee "${config}" >/dev/null || return 1
+  sudo chmod 0440 "/etc/sudoers.d/${USER}" || return 1
+  trap 'sudo rm --force "/etc/sudoers.d/${USER}"' EXIT || return 1
+}
+
 install_packages() {
   local packages=("$@")
   sudo pacman -S --noconfirm --needed "${packages[@]}" || return 1
@@ -443,6 +465,10 @@ apply_dotfiles() {
 remove_chezmoi() {
   chezmoi purge --force || return 1
   sudo pacman -Rns --noconfirm chezmoi || return 1
+}
+
+enable_password_prompt() {
+  sudo rm --force "/etc/sudoers.d/${USER}"
 }
 
 main "$@"

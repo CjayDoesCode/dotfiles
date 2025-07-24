@@ -61,8 +61,6 @@ readonly OSU_PACKAGES=('osu-mime' 'osu-handler' 'osu-lazer-bin')
 readonly OTD_PACKAGE='opentabletdriver'
 readonly OTD_SERVICE='opentabletdriver.service'
 
-readonly GREETD_SERVICE='greetd.service'
-
 declare -Ar GSETTINGS_VALUES=(
   ['color-scheme']='prefer-dark'
   ['cursor-theme']='capitaine-cursors-light'
@@ -421,7 +419,7 @@ configure_greetd() {
 		user = "${USER}"
 	CONFIG
 
-  sudo systemctl enable "${GREETD_SERVICE}" || return 1
+  sudo systemctl enable greetd.service || return 1
 }
 
 configure_gtk() {

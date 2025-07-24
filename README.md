@@ -7,30 +7,30 @@ Dotfiles for a simple Arch Linux Hyprland setup.
 
 **Applications**
 
-- **Web Browser:** `firefox`
-- **Terminal Emulator:** `kitty`
-- **PulseAudio Volume Control:** `pavucontrol`
-- **NetworkManager Connection Editor:** `nm-connection-editor`
+- **NetworkManager Connection Editor:** `nm-connection-editor`  
+- **PulseAudio Volume Control:** `pavucontrol`  
+- **Terminal Emulator:** `kitty`  
+- **Web Browser:** `firefox`  
 
 **User Interface**
 
-- **Application Launcher:** `rofi-wayland`
-- **Screen Lock:** `hyprlock`
-- **Status Bar:** `waybar`
-- **Wallpaper Utility:** `hyprpaper`
+- **Application Launcher:** `rofi-wayland`  
+- **Screen Lock:** `hyprlock`  
+- **Status Bar:** `waybar`  
+- **Wallpaper Utility:** `hyprpaper`  
 
 **Utilities**
 
-- **Idle Management Daemon:** `hypridle`
-- **Notification Daemon:** `mako`
-- **System Information:** `fastfetch`
-- **System Monitor:** `bottom`
+- **Idle Management Daemon:** `hypridle`  
+- **Notification Daemon:** `mako`  
+- **System Information:** `fastfetch`  
+- **System Monitor:** `bottom`  
 
 **Appearance**
 
-- **Cursor Theme:** `capitaine-cursors`
-- **GTK Theme:** `orchis-theme`
-- **Icon Theme:** `tela-circle-icon-theme-standard`
+- **Cursor Theme:** `capitaine-cursors`  
+- **GTK Theme:** `orchis-theme`  
+- **Icon Theme:** `tela-circle-icon-theme-standard`  
 
 **Extras**
 
@@ -39,8 +39,8 @@ Dotfiles for a simple Arch Linux Hyprland setup.
 
 **Optional**
 
-- **Rhythm Game :** osu!(lazer)
 - **Tablet Driver:** OpenTabletDriver
+- **Rhythm Game :** osu!(lazer)
 
 ## Installation
 
@@ -48,7 +48,7 @@ Dotfiles for a simple Arch Linux Hyprland setup.
 
 2. Download the script.
 ```bash
-curl -o install.sh https://raw.githubusercontent.com/CjayDoesCode/dotfiles/main/install.sh
+curl -O https://raw.githubusercontent.com/CjayDoesCode/dotfiles/main/install.sh
 ```
 
 3. Make the script executable.

@@ -353,7 +353,12 @@ confirm() {
   local input=''
 
   while true; do
-    input="$(scan "${prompt} [y/n]: ")"
+    input="$(scan "${prompt} [Y/n]: ")"
+
+    if [[ -z "${input}" ]]; then
+      printf 'true'
+      return 0
+    fi
 
     case "${input,,}" in
     y | yes)

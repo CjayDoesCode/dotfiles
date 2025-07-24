@@ -1,3 +1,6 @@
+![screenshot_desktop.png](screenshot_desktop.png)
+![screenshot_lockscreen.png](screenshot_lockscreen.png)
+
 # Dotfiles
 
 Dotfiles for a simple Arch Linux Hyprland setup.
@@ -36,37 +39,36 @@ Dotfiles for a simple Arch Linux Hyprland setup.
 
 **Optional**
 
-- **Game:** osu!(lazer)
+- **Rhythm Game :** osu!(lazer)
+- **Tablet Driver:** OpenTabletDriver
 
 ## Installation
 
-1. Install a base Arch Linux system using [arch-install-script](https://github.com/CjayDoesCode/arch-install-script).
+1. Install a base Arch Linux system by following the [ArchWiki Installation Guide](https://wiki.archlinux.org/title/Installation_guide) or using [arch-install-scripts](https://github.com/CjayDoesCode/arch-install-scripts).
 
 2. Download the script.
 ```bash
 curl -o install.sh https://raw.githubusercontent.com/CjayDoesCode/dotfiles/main/install.sh
 ```
 
-3. Add executable permissions.
+3. Make the script executable.
 ```bash
 chmod +x install.sh
 ```
 
-4. Run the script.
+4. Run the installer.
 ```bash
 ./install.sh
 ```
 
 ## Installed Packages
 
-| Package Group       | Packages                                                                                                                                                                                                                                                                  |
-| :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `packages`          | `bottom` `chezmoi` `fastfetch` `firefox` `greetd` `greetd-tuigreet` `grim` `helix` `imagemagick` `kitty` `libnotify` `mako` `nm-connection-editor` `pavucontrol` `rofi-wayland` `slurp` `udiskie` `uwsm` `waybar` `wl-clipboard` `xdg-desktop-portal-gtk` `xdg-user-dirs` |
-| `hyprland_packages` | `hypridle` `hyprland` `hyprpaper` `hyprlock` `hyprpolkitagent` `xdg-desktop-portal-hyprland`                                                                                                                                                                              |
-| `font_packages`     | `inter-font` `noto-fonts` `noto-fonts-cjk` `noto-fonts-emoji` `noto-fonts-extra` `ttf-nerd-fonts-symbols` `ttf-nerd-fonts-symbols-mono` `ttf-sourcecodepro-nerd`                                                                                                          |
-| `theme_packages`    | `capitaine-cursors` `orchis-theme` `tela-circle-icon-theme-standard`                                                                                                                                                                                                      |
+| Package Group       | Packages                                                                                                                                                                                                                                  |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| base_packages       | bottom, chezmoi, fastfetch, greetd, greetd-tuigreet, grim, helix, imagemagick, kitty, libnotify, mako, nm-connection-editor, pavucontrol, rofi-wayland, slurp, udiskie, uwsm, waybar, wl-clipboard, xdg-desktop-portal-gtk, xdg-user-dirs |
+| font_packages       | inter-font, noto-fonts, noto-fonts-cjk, noto-fonts-emoji, noto-fonts-extra, ttf-nerd-fonts-symbols, ttf-nerd-fonts-symbols-mono, ttf-sourcecodepro-nerd                                                                                   |
+| hyprland_packages   | hypridle, hyprland, hyprlock, hyprpaper, hyprpolkitagent, xdg-desktop-portal-hyprland                                                                                                                                                     |
+| theme_packages      | capitaine-cursors, orchis-theme, tela-circle-icon-theme-standard                                                                                                                                                                          |
 
-## Screenshots
-
-![screenshot_desktop.png](screenshot_desktop.png)
-![screenshot_lockscreen.png](screenshot_lockscreen.png)
+Installing AUR packages for osu!(lazer) and OpenTabletDriver will also install base-devel.<br/>
+You can replace firefox with the --browser option (e.g., `./install.sh --browser qutebrowser`).

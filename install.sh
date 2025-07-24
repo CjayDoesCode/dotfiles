@@ -468,7 +468,8 @@ remove_chezmoi() {
 }
 
 enable_password_prompt() {
-  sudo rm --force "/etc/sudoers.d/${USER}"
+  sudo rm --force "/etc/sudoers.d/${USER}" || return 1
+  trap - EXIT || return 1
 }
 
 main "$@"

@@ -395,9 +395,10 @@ disable_password_prompt() {
   local entry='Defaults:'"${USER}"' !authenticate'
   local config="/etc/sudoers.d/${USER}"
 
+  # shellcheck disable=SC2064
+  trap "sudo rm --force ${config}" EXIT || return 1
   printf '%s' "${entry}" | sudo tee "${config}" >/dev/null || return 1
   sudo chmod 0440 "/etc/sudoers.d/${USER}" || return 1
-  trap 'sudo rm --force "/etc/sudoers.d/${USER}"' EXIT || return 1
 }
 
 install_packages() {

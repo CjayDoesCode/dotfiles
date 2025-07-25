@@ -132,12 +132,12 @@ main() {
 
   if ! is_arch_linux; then
     print_error 'this script only supports arch linux.\n\n'
-    exit 1
+    return 1
   fi
 
   if is_root; then
     print_error 'this script must not be run as root.\n\n'
-    exit 1
+    return 1
   fi
 
   if ! is_package_available "${browser_package}"; then

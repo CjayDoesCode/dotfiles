@@ -35,7 +35,7 @@ Dotfiles for a simple Arch Linux Hyprland setup.
 
 **Extras**
 
-- **Fastfetch Logo:** From [osu! Spring 2024 Fanart Contest](https://osu.ppy.sh/community/contests/205) by [roadcrow__](https://osu.ppy.sh/users/11752694)
+- **Fastfetch Logo:** From [osu! Spring 2024 Fanart Contest](https://osu.ppy.sh/community/contests/205) by [Bitiksquid (formerly roadcrow__)](https://osu.ppy.sh/users/11752694)
 - **Wallpaper:** From [osu! Midnight Moment Art Contest](https://osu.ppy.sh/community/contests/226) by [tehfire](https://osu.ppy.sh/users/7082924)
 
 **Optional**

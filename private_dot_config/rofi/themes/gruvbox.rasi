@@ -13,7 +13,6 @@
 }
 
 window {
-  spacing: 16px;
   padding: 16px;
   border-radius: 8px;
   background-color: var(bg-color);
@@ -42,22 +41,14 @@ entry {
   cursor-width: 1px;
 }
 
-/* dynamic size causes issues with animation */
 listview {
   spacing: 4px;
-  fixed-height: true;
-  dynamic: false;
-  scrollbar: true;
-  scrollbar-width: 2px;
+  margin: 16px 0px 0px 0px;
+  fixed-height: false;
+  dynamic: true;
   cycle: false;
   lines: 5;
-  children: [ scrollbar, element ];
-}
-
-scrollbar {
-  handle-width: 2px;
-  handle-color: var(fg-color);
-  handle-rounded-corners: true;
+  children: [ element ];
 }
 
 element {

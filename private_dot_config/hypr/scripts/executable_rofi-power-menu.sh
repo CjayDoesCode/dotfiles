@@ -14,10 +14,13 @@ print_options() {
   done
 }
 
-case "$(print_options | rofi -dmenu -i)" in
-Lock) loginctl lock-session ;;
-Sleep) systemctl suspend ;;
-Hibernate) systemctl hibernate ;;
-Reboot) systemctl reboot ;;
-Shutdown) systemctl poweroff ;;
-esac
+if option="$(print_options | rofi -dmenu -i)"; then
+  sleep 0.25
+  case "${option}" in
+  Lock) loginctl lock-session ;;
+  Sleep) systemctl suspend ;;
+  Hibernate) systemctl hibernate ;;
+  Reboot) systemctl reboot ;;
+  Shutdown) systemctl poweroff ;;
+  esac
+fi

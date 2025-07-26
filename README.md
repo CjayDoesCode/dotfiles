@@ -1,4 +1,5 @@
-![screenshot_desktop.png](screenshot_desktop.png)
+![screenshot_desktop_1.png](screenshot_desktop_1.png)
+![screenshot_desktop_2.png](screenshot_desktop_2.png)
 ![screenshot_lockscreen.png](screenshot_lockscreen.png)
 
 # Dotfiles

@@ -8,30 +8,30 @@ Dotfiles for a simple Arch Linux Hyprland setup.
 
 **Applications**
 
-- **NetworkManager Connection Editor:** `nm-connection-editor`  
-- **PulseAudio Volume Control:** `pavucontrol`  
-- **Terminal Emulator:** `kitty`  
-- **Web Browser:** `firefox`  
+- **NetworkManager Connection Editor:** nm-connection-editor
+- **PulseAudio Volume Control:** pavucontrol
+- **Terminal Emulator:** kitty
+- **Web Browser:** firefox
 
 **User Interface**
 
-- **Application Launcher:** `rofi-wayland`  
-- **Screen Lock:** `hyprlock`  
-- **Status Bar:** `waybar`  
-- **Wallpaper Utility:** `hyprpaper`  
+- **Application Launcher:** rofi-wayland
+- **Screen Lock:** hyprlock
+- **Status Bar:** waybar
+- **Wallpaper Utility:** hyprpaper
 
 **Utilities**
 
-- **Idle Management Daemon:** `hypridle`  
-- **Notification Daemon:** `mako`  
-- **System Information:** `fastfetch`  
-- **System Monitor:** `bottom`  
+- **Idle Management Daemon:** hypridle
+- **Notification Daemon:** mako
+- **System Information:** fastfetch
+- **System Monitor:** bottom
 
 **Appearance**
 
-- **Cursor Theme:** `capitaine-cursors`  
-- **GTK Theme:** `orchis-theme`  
-- **Icon Theme:** `tela-circle-icon-theme-standard`  
+- **Cursor Theme:** capitaine-cursors
+- **GTK Theme:** orchis-theme
+- **Icon Theme:** tela-circle-icon-theme-standard
 
 **Extras**
 
@@ -65,11 +65,14 @@ chmod +x install.sh
 ## Installed Packages
 
 | Package Group       | Packages                                                                                                                                                                                                                                  |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :---                | :---                                                                                                                                                                                                                                      |
 | base_packages       | bottom, chezmoi, fastfetch, greetd, greetd-tuigreet, grim, helix, imagemagick, kitty, libnotify, mako, nm-connection-editor, pavucontrol, rofi-wayland, slurp, udiskie, uwsm, waybar, wl-clipboard, xdg-desktop-portal-gtk, xdg-user-dirs |
 | font_packages       | inter-font, noto-fonts, noto-fonts-cjk, noto-fonts-emoji, noto-fonts-extra, ttf-nerd-fonts-symbols, ttf-nerd-fonts-symbols-mono, ttf-sourcecodepro-nerd                                                                                   |
 | hyprland_packages   | hypridle, hyprland, hyprlock, hyprpaper, hyprpolkitagent, xdg-desktop-portal-hyprland                                                                                                                                                     |
 | theme_packages      | capitaine-cursors, orchis-theme, tela-circle-icon-theme-standard                                                                                                                                                                          |
+| osu_packages[^1]    | osu-mime, osu-handler, osu-lazer-bin                                                                                                                                                                                                      |
+| otd_package[^1]     | opentabletdriver                                                                                                                                                                                                                          |
+| browser_package[^2] | firefox                                                                                                                                                                                                                                   |
 
-Installing AUR packages for osu!(lazer) and OpenTabletDriver will also install base-devel.<br/>
-You can replace firefox with the --browser option (e.g., `./install.sh --browser qutebrowser`).
+[^1]: Installing AUR packages for osu!(lazer) and OpenTabletDriver will also install base-devel.
+[^2]: You can replace the browser package with the --browser option (e.g., `./install.sh --browser qutebrowser`).

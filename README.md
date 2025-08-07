@@ -70,9 +70,8 @@ chmod +x install.sh
 | font_packages       | inter-font, noto-fonts, noto-fonts-cjk, noto-fonts-emoji, noto-fonts-extra, ttf-nerd-fonts-symbols, ttf-nerd-fonts-symbols-mono, ttf-sourcecodepro-nerd                                                                                   |
 | hyprland_packages   | hypridle, hyprland, hyprlock, hyprpaper, hyprpolkitagent, xdg-desktop-portal-hyprland                                                                                                                                                     |
 | theme_packages      | capitaine-cursors, orchis-theme, tela-circle-icon-theme-standard                                                                                                                                                                          |
-| osu_packages[^1]    | osu-mime, osu-handler, osu-lazer-bin                                                                                                                                                                                                      |
-| otd_package[^1]     | opentabletdriver                                                                                                                                                                                                                          |
-| browser_package[^2] | firefox                                                                                                                                                                                                                                   |
+| osu_packages        | osu-mime, osu-handler, osu-lazer-bin                                                                                                                                                                                                      |
+| otd_package         | opentabletdriver                                                                                                                                                                                                                          |
+| browser_package[^1] | firefox                                                                                                                                                                                                                                   |
 
-[^1]: Installing AUR packages for osu!(lazer) and OpenTabletDriver will also install base-devel.
-[^2]: You can replace the browser package with the --browser option (e.g., `./install.sh --browser qutebrowser`).
+[^1]: You can replace the browser package with the --browser option (e.g., `./install.sh --browser qutebrowser`).

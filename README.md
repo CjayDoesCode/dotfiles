@@ -4,7 +4,7 @@
 
 # Dotfiles
 
-Dotfiles for a simple Arch Linux Hyprland setup.
+Dotfiles for an Arch Linux Hyprland setup.
 
 **Applications**
 

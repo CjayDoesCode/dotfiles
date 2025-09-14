@@ -18,7 +18,7 @@ readonly BASE_PACKAGES=(
   'mako'
   'nm-connection-editor'
   'pavucontrol'
-  'rofi-wayland'
+  'rofi'
   'slurp'
   'udiskie'
   'uwsm'

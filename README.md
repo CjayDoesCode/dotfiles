@@ -15,7 +15,7 @@ Dotfiles for an Arch Linux Hyprland setup.
 
 **User Interface**
 
-- **Application Launcher:** rofi-wayland
+- **Application Launcher:** rofi
 - **Screen Lock:** hyprlock
 - **Status Bar:** waybar
 - **Wallpaper Utility:** hyprpaper
